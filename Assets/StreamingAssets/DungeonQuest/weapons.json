@@ -1,0 +1,40 @@
+{
+	"rv-weapons":
+	[
+		{
+			"name" : "axe",
+			"index" : "0",
+			"damage" : "5",
+			"crit" : "0.01",
+			"character" : ["Irene", "Yeri"]
+		},
+		{
+			"name" : "knife",
+			"index" : "1",
+			"damage" : "5",
+			"crit" : "0.01",
+			"character" : ["Seulgi"]
+		},
+		{
+			"name" : "scissors",
+			"index" : "2",
+			"damage" : "5",
+			"crit" : "0.01",
+			"character" : ["Wendy"]
+		},
+		{
+			"name" : "submachine gun",
+			"index" : "3",
+			"damage" : "5",
+			"crit" : "0.01",
+			"character" : ["Joy"]
+		},
+		{
+			"name" : "crossbow",
+			"index" : "4",
+			"damage" : "5",
+			"crit" : "0.01",
+			"character" : ["Yeri", "Wendy"]
+		}
+	]
+}

@@ -1,0 +1,739 @@
+fileFormatVersion: 2
+guid: 4a04dfb4e421a2549b4e4c05b7755b04
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 535770933700357630
+    second: redvelvet-cardsheet 1_0
+  - first:
+      213: -1583904642641841756
+    second: redvelvet-cardsheet 1_1
+  - first:
+      213: 4570897990418290669
+    second: redvelvet-cardsheet 1_2
+  - first:
+      213: -2199838610369081761
+    second: redvelvet-cardsheet 1_3
+  - first:
+      213: -6000326748479438669
+    second: redvelvet-cardsheet 1_4
+  - first:
+      213: 2146917056834159010
+    second: redvelvet-cardsheet 1_5
+  - first:
+      213: -7583561354758240953
+    second: redvelvet-cardsheet 1_6
+  - first:
+      213: -8084818474545033790
+    second: redvelvet-cardsheet 1_7
+  - first:
+      213: 4530831768296071613
+    second: redvelvet-cardsheet 1_8
+  - first:
+      213: -9081500451015502908
+    second: redvelvet-cardsheet 1_9
+  - first:
+      213: 6076814262393383497
+    second: redvelvet-cardsheet 1_10
+  - first:
+      213: -5151956310695197908
+    second: redvelvet-cardsheet 1_11
+  - first:
+      213: -7179567823197108911
+    second: redvelvet-cardsheet 1_12
+  - first:
+      213: -2605242469354318524
+    second: redvelvet-cardsheet 1_13
+  - first:
+      213: -7764225814243451459
+    second: redvelvet-cardsheet 1_14
+  - first:
+      213: -7063433287212247553
+    second: redvelvet-cardsheet 1_15
+  - first:
+      213: 1480243904152629933
+    second: redvelvet-cardsheet 1_16
+  - first:
+      213: -3608618320752642514
+    second: redvelvet-cardsheet 1_17
+  - first:
+      213: 3095837830715105854
+    second: redvelvet-cardsheet 1_18
+  - first:
+      213: 7888807715606372119
+    second: redvelvet-cardsheet 1_19
+  - first:
+      213: -5821629611245010497
+    second: redvelvet-cardsheet 1_20
+  - first:
+      213: -5762935511057949591
+    second: redvelvet-cardsheet 1_21
+  - first:
+      213: 7218712891345418415
+    second: redvelvet-cardsheet 1_22
+  - first:
+      213: 4303139826389027124
+    second: redvelvet-cardsheet 1_23
+  - first:
+      213: -4389761978099310030
+    second: redvelvet-cardsheet 1_24
+  externalObjects: {}
+  serializedVersion: 10
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: -1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: redvelvet-cardsheet 1_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 4200
+        width: 750
+        height: 1050
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: efd603853d07f6700800000000000000
+      internalID: 535770933700357630
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: redvelvet-cardsheet 1_1
+      rect:
+        serializedVersion: 2
+        x: 750
+        y: 4200
+        width: 750
+        height: 1050
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4a1bd319e17d40ae0800000000000000
+      internalID: -1583904642641841756
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: redvelvet-cardsheet 1_2
+      rect:
+        serializedVersion: 2
+        x: 1500
+        y: 4200
+        width: 750
+        height: 1050
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: de7dd6f21871f6f30800000000000000
+      internalID: 4570897990418290669
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: redvelvet-cardsheet 1_3
+      rect:
+        serializedVersion: 2
+        x: 2250
+        y: 4200
+        width: 750
+        height: 1050
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f5e03c9607a9871e0800000000000000
+      internalID: -2199838610369081761
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: redvelvet-cardsheet 1_4
+      rect:
+        serializedVersion: 2
+        x: 3000
+        y: 4200
+        width: 750
+        height: 1050
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3b0cb940d9e8abca0800000000000000
+      internalID: -6000326748479438669
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: redvelvet-cardsheet 1_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 3150
+        width: 750
+        height: 1050
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2a1c3d630b16bcd10800000000000000
+      internalID: 2146917056834159010
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: redvelvet-cardsheet 1_6
+      rect:
+        serializedVersion: 2
+        x: 750
+        y: 3150
+        width: 750
+        height: 1050
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 74541459027c1c690800000000000000
+      internalID: -7583561354758240953
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: redvelvet-cardsheet 1_7
+      rect:
+        serializedVersion: 2
+        x: 1500
+        y: 3150
+        width: 750
+        height: 1050
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2cd4a3fbe64fccf80800000000000000
+      internalID: -8084818474545033790
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: redvelvet-cardsheet 1_8
+      rect:
+        serializedVersion: 2
+        x: 2250
+        y: 3150
+        width: 750
+        height: 1050
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: db1a756ec7fb0ee30800000000000000
+      internalID: 4530831768296071613
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: redvelvet-cardsheet 1_9
+      rect:
+        serializedVersion: 2
+        x: 3000
+        y: 3150
+        width: 750
+        height: 1050
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4c3dba5a47708f180800000000000000
+      internalID: -9081500451015502908
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: redvelvet-cardsheet 1_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2100
+        width: 750
+        height: 1050
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 94a2cf3106e255450800000000000000
+      internalID: 6076814262393383497
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: redvelvet-cardsheet 1_11
+      rect:
+        serializedVersion: 2
+        x: 750
+        y: 2100
+        width: 750
+        height: 1050
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c234eaa18039088b0800000000000000
+      internalID: -5151956310695197908
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: redvelvet-cardsheet 1_12
+      rect:
+        serializedVersion: 2
+        x: 1500
+        y: 2100
+        width: 750
+        height: 1050
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 15503819a1d0d5c90800000000000000
+      internalID: -7179567823197108911
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: redvelvet-cardsheet 1_13
+      rect:
+        serializedVersion: 2
+        x: 2250
+        y: 2100
+        width: 750
+        height: 1050
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 445df5cf6c158dbd0800000000000000
+      internalID: -2605242469354318524
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: redvelvet-cardsheet 1_14
+      rect:
+        serializedVersion: 2
+        x: 3000
+        y: 2100
+        width: 750
+        height: 1050
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dbdd91232cdef3490800000000000000
+      internalID: -7764225814243451459
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: redvelvet-cardsheet 1_15
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1050
+        width: 750
+        height: 1050
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ff55b0559d4a9fd90800000000000000
+      internalID: -7063433287212247553
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: redvelvet-cardsheet 1_16
+      rect:
+        serializedVersion: 2
+        x: 750
+        y: 1050
+        width: 750
+        height: 1050
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: da274f7fcf1ea8410800000000000000
+      internalID: 1480243904152629933
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: redvelvet-cardsheet 1_17
+      rect:
+        serializedVersion: 2
+        x: 1500
+        y: 1050
+        width: 750
+        height: 1050
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e26729da1cc9bedc0800000000000000
+      internalID: -3608618320752642514
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: redvelvet-cardsheet 1_18
+      rect:
+        serializedVersion: 2
+        x: 2250
+        y: 1050
+        width: 750
+        height: 1050
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e326df5ca10a6fa20800000000000000
+      internalID: 3095837830715105854
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: redvelvet-cardsheet 1_19
+      rect:
+        serializedVersion: 2
+        x: 3000
+        y: 1050
+        width: 750
+        height: 1050
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 71f141612dcaa7d60800000000000000
+      internalID: 7888807715606372119
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: redvelvet-cardsheet 1_20
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 750
+        height: 1050
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb188df76ba653fa0800000000000000
+      internalID: -5821629611245010497
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: redvelvet-cardsheet 1_21
+      rect:
+        serializedVersion: 2
+        x: 750
+        y: 0
+        width: 750
+        height: 1050
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 96c18ef9fa0f500b0800000000000000
+      internalID: -5762935511057949591
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: redvelvet-cardsheet 1_22
+      rect:
+        serializedVersion: 2
+        x: 1500
+        y: 0
+        width: 750
+        height: 1050
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fa83d28d0250e2460800000000000000
+      internalID: 7218712891345418415
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: redvelvet-cardsheet 1_23
+      rect:
+        serializedVersion: 2
+        x: 2250
+        y: 0
+        width: 750
+        height: 1050
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 43901c28fd2d7bb30800000000000000
+      internalID: 4303139826389027124
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: redvelvet-cardsheet 1_24
+      rect:
+        serializedVersion: 2
+        x: 3000
+        y: 0
+        width: 750
+        height: 1050
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 232efd62dbe6413c0800000000000000
+      internalID: -4389761978099310030
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

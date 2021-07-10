@@ -1,0 +1,25 @@
+{
+	"Flowers": [
+		{
+			"Name":"",
+			"Type": "Common",
+			"Index": "0",
+			"Cost": "0",
+			"Earns": "20"
+		},
+		{
+			"Name":"",
+			"Type": "Common",
+			"Index": "1",
+			"Cost": "0",
+			"Earns": "20"
+		},
+		{
+			"Name":"",
+			"Type": "Rare",
+			"Index": "2",
+			"Cost": "50",
+			"Earns": "80"
+		}
+	]
+}

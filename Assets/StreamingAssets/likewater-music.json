@@ -1,0 +1,304 @@
+{
+	"Music": [
+		{
+			"Title": "When This Rain Stops", 
+			"Links": 
+			[
+				{
+					"icon" : "icon-spotify.png",
+					"link" : "https://open.spotify.com/track/6mavVLsxaa4YcPje9qZKcf?si=69258e1b396f496a"
+				},
+				{
+					"icon" : "icon-apple.png",
+					"link" : "https://music.apple.com/us/album/when-this-rain-stops/1560769290?i=1560769291"
+				},
+				{
+					"icon" : "icon-youtube.png",
+					"link" : "https://music.youtube.com/watch?v=R8ja8lDIBt8&feature=share"
+				},
+				{
+					"icon" : "icon-deezer.png",
+					"link" : "https://deezer.page.link/chxAunV1hjTdznJx8"
+				}
+			],
+			"Videos": 
+			[
+				{
+					"title": "[MV] When This Rain Stops",
+					"date": "2021-04-09",
+					"image-url": "https://img.youtube.com/vi/tknKZe_TyqU/maxresdefault.jpg",
+					"video-url": "https://www.youtube.com/watch?v=tknKZe_TyqU",
+					"win": ""
+				},
+				{
+					"title": "[Inkigayo] When This Rain Stops",
+					"date": "2021-04-11",
+					"image-url": "https://img.youtube.com/vi/lRx5_rNiiRg/maxresdefault.jpg",
+					"video-url": "https://www.youtube.com/watch?v=lRx5_rNiiRg",
+					"win": ""
+				},
+				{
+					"title": "[MCountdown] When This Rain Stops",
+					"date": "2021-04-15",
+					"image-url": "https://img.youtube.com/vi/4w3TENhtiUo/maxresdefault.jpg",
+					"video-url": "https://www.youtube.com/watch?v=4w3TENhtiUo",
+					"win": ""
+				},
+				{
+					"title": "[Inkigayo Fancam] When This Rain Stops",
+					"date": "2021-04-11",
+					"image-url": "https://img.youtube.com/vi/QX1IV4EPLo0/maxresdefault.jpg",
+					"video-url": "https://www.youtube.com/watch?v=QX1IV4EPLo0",
+					"win": ""
+				},
+				{
+					"title": "[Inkigayo Full Fancam] When This Rain Stops",
+					"date": "2021-04-11",
+					"image-url": "https://img.youtube.com/vi/9BIswU5zoVQ/maxresdefault.jpg",
+					"video-url": "https://www.youtube.com/watch?v=9BIswU5zoVQ",
+					"win": ""
+				},
+				{
+					"title": "’When This Rain Stops’ & ‘Like Water’ Recording Behind",
+					"date": "2021-04-20",
+					"image-url": "https://img.youtube.com/vi/zFmZxxQt4wU/maxresdefault.jpg",
+					"video-url": "https://www.youtube.com/watch?v=zFmZxxQt4wU",
+					"win": ""
+				}
+			]
+		},
+		{
+			"Title": "Like Water", 
+			"Links": 
+			[
+				{
+					"icon" : "icon-spotify.png",
+					"link" : "https://open.spotify.com/track/37LhFxchiyAJVop5JgRZgY?si=704484c815e4449c"
+				},
+				{
+					"icon" : "icon-apple.png",
+					"link" : "https://music.apple.com/us/album/like-water/1560769290"
+				},
+				{
+					"icon" : "icon-youtube.png",
+					"link" : "https://music.youtube.com/watch?v=vyuQAgDBKM4"
+				},
+				{
+					"icon" : "icon-deezer.png",
+					"link" : "https://deezer.page.link/R2iPLANfMg9MtHLTA"
+				}
+			],
+			"Videos": 
+			[
+				{
+					"title": "[MV] Like Water",
+					"date": "2021-04-05",
+					"image-url": "https://img.youtube.com/vi/-Ih5UArd4zk/maxresdefault.jpg",
+					"video-url": "https://www.youtube.com/watch?v=-Ih5UArd4zk",
+					"win": ""
+				},
+				{
+					"title": "[Cultwo Show] Like Water",
+					"date": "2021-04-08",
+					"image-url": "https://img.youtube.com/vi/z9BgND63UqQ/maxresdefault.jpg",
+					"video-url": "https://www.youtube.com/watch?v=z9BgND63UqQ",
+					"win": ""
+				},
+				{
+					"title": "[Music Bank] Like Water",
+					"date": "2021-04-09",
+					"image-url": "https://img.youtube.com/vi/lWlq3gFGWqY/maxresdefault.jpg",
+					"video-url": "https://www.youtube.com/watch?v=lWlq3gFGWqY",
+					"win": ""
+				},
+				{
+					"title": "[Inkigayo] Like Water",
+					"date": "2021-04-11",
+					"image-url": "https://img.youtube.com/vi/54cU5iTdyNc/maxresdefault.jpg",
+					"video-url": "https://www.youtube.com/watch?v=54cU5iTdyNc",
+					"win": ""
+				},
+				{
+					"title": "[CoolFM] Like Water",
+					"date": "2021-04-11",
+					"image-url": "https://img.youtube.com/vi/1v7A0_O9wwQ/maxresdefault.jpg",
+					"video-url": "https://www.youtube.com/watch?v=1v7A0_O9wwQ",
+					"win": ""
+				},
+				{
+					"title": "[MCountdown] Like Water",
+					"date": "2021-04-15",
+					"image-url": "https://img.youtube.com/vi/6jS9714mBVo/maxresdefault.jpg",
+					"video-url": "https://www.youtube.com/watch?v=6jS9714mBVo",
+					"win": ""
+				},
+				{
+					"title": "[Inkigayo Fancam] Like Water",
+					"date": "2021-04-11",
+					"image-url": "https://img.youtube.com/vi/zI6zoRzp-LA/maxresdefault.jpg",
+					"video-url": "https://www.youtube.com/watch?v=zI6zoRzp-LA",
+					"win": ""
+				},
+				{
+					"title": "[Mdromeda] Like Water Band Ver.",
+					"date": "2021-04-19",
+					"image-url": "https://img.youtube.com/vi/CAfarUrfG9o/maxresdefault.jpg",
+					"video-url": "https://www.youtube.com/watch?v=CAfarUrfG9o",
+					"win": ""
+				},
+				{
+					"title": "[Music Bank K-Fancam] Like Water",
+					"date": "2021-04-09",
+					"image-url": "https://img.youtube.com/vi/EIF3qYvyVnE/maxresdefault.jpg",
+					"video-url": "https://www.youtube.com/watch?v=EIF3qYvyVnE",
+					"win": ""
+				},
+				{
+					"title": "[MCountdown Fancam] Like Water (Horizontal)",
+					"date": "2021-04-15",
+					"image-url": "https://img.youtube.com/vi/lo4147c_ij8/maxresdefault.jpg",
+					"video-url": "https://www.youtube.com/watch?v=lo4147c_ij8",
+					"win": ""
+				},
+				{
+					"title": "[MCountdown Fancam] Like Water",
+					"date": "2021-04-15",
+					"image-url": "https://img.youtube.com/vi/slqglgkAmfc/maxresdefault.jpg",
+					"video-url": "https://www.youtube.com/watch?v=slqglgkAmfc",
+					"win": ""
+				},
+				{
+					"title": "[Show!MuCore] Like Water",
+					"date": "2021-04-17",
+					"image-url": "https://img.youtube.com/vi/Dah2ZFwmYNM/maxresdefault.jpg",
+					"video-url": "https://www.youtube.com/watch?v=Dah2ZFwmYNM",
+					"win": ""
+				},
+				{
+					"title": "[Show!MuCore Fancam] Like Water",
+					"date": "2021-04-17",
+					"image-url": "https://img.youtube.com/vi/6CjkivUx4ro/maxresdefault.jpg",
+					"video-url": "https://www.youtube.com/watch?v=6CjkivUx4ro",
+					"win": ""
+				},	
+				{
+					"title": "Like Water MV Behind",
+					"date": "2021-04-15",
+					"image-url": "https://img.youtube.com/vi/tCzsvAUuVrc/maxresdefault.jpg",
+					"video-url": "https://www.youtube.com/watch?v=tCzsvAUuVrc",
+					"win": ""
+				},
+				{
+					"title": "’When This Rain Stops’ & ‘Like Water’ Recording Behind",
+					"date": "2021-04-20",
+					"image-url": "https://img.youtube.com/vi/zFmZxxQt4wU/maxresdefault.jpg",
+					"video-url": "https://www.youtube.com/watch?v=zFmZxxQt4wU",
+					"win": ""
+				}
+			]
+		},
+		{
+			"Title": "Why Can't You Love Me?", 
+			"Links": 
+			[
+				{
+					"icon" : "icon-spotify.png",
+					"link" : "https://open.spotify.com/track/0CyydmXI4QhgUWrZsPOTXA?si=1996fd393a7c409a"
+				},
+				{
+					"icon" : "icon-apple.png",
+					"link" : "https://music.apple.com/us/album/why-cant-you-love-me/1560769290?i=1560769293"
+				},
+				{
+					"icon" : "icon-youtube.png",
+					"link" : "https://music.youtube.com/watch?v=VM5Q071Rxl8&feature=share"
+				},
+				{
+					"icon" : "icon-deezer.png",
+					"link" : "https://deezer.page.link/wNCw7XvtbZjWDfHWA"
+				}
+			],
+			"Videos": 
+			[
+				{
+					"title": "[Mdromeda] Why Can’t You Love Me? Band Ver.",
+					"date": "2021-04-13",
+					"image-url": "https://img.youtube.com/vi/_IzQGO7UiNk/maxresdefault.jpg",
+					"video-url": "https://www.youtube.com/watch?v=_IzQGO7UiNk",
+					"win": ""
+				},
+				{
+					"title": "[KSY] Why Can't You Love Me?",
+					"date": "2021-04-12",
+					"image-url": "https://img.youtube.com/vi/o_PXWsAWOY0/maxresdefault.jpg",
+					"video-url": "https://www.youtube.com/watch?v=o_PXWsAWOY0",
+					"win": ""
+				}
+			]
+		},
+		{
+			"Title": "The Road", 
+			"Links": 
+			[
+				{
+					"icon" : "icon-spotify.png",
+					"link" : "https://open.spotify.com/track/7cXJOM8t8pftyFgYp5Sm1N"
+				},
+				{
+					"icon" : "icon-apple.png",
+					"link" : "https://music.apple.com/us/album/the-road/1560769290"
+				},
+				{
+					"icon" : "icon-youtube.png",
+					"link" : "https://music.youtube.com/watch?v=DiAuyUOfUEA"
+				},
+				{
+					"icon" : "icon-deezer.png",
+					"link" : "https://deezer.page.link/3V8BFsicUsnLP54d6"
+				}
+			],
+			"Videos": 
+			[
+				{	
+					"title": "[INSTAGRAM LIVE] @todayis_wendy Live",
+					"date": "2021-04-21",
+					"image-url": "https://revelupgames.s3-us-west-1.amazonaws.com/LikeWaterDev/LikeWater/wendy-instalive.png",
+					"video-url": "https://www.instagram.com/p/CN7hIz9JypQ/",
+					"win": ""
+				}	
+			]
+		},
+		{
+			"Title": "Best Friend (with Seulgi)", 
+			"Links": 
+			[
+				{
+					"icon" : "icon-spotify.png",
+					"link" : "https://open.spotify.com/track/0F9Xy6OTbkqOv94pklkwKu?si=a5060c7d01c64273"
+				},
+				{
+					"icon" : "icon-apple.png",
+					"link" : "https://music.apple.com/us/album/best-friend-with-seulgi/1560769290?i=1560769596"
+				},
+				{
+					"icon" : "icon-youtube.png",
+					"link" : "https://music.youtube.com/watch?v=baPCoKbXyXM&feature=share"
+				},
+				{
+					"icon" : "icon-deezer.png",
+					"link" : "https://deezer.page.link/PBeKKKt1AZoG7NRA9"
+				}
+			],
+			"Videos": 
+			[
+				{	
+					"title": "‘Best Friend’ Recording Behind",
+					"date": "2021-04-12",
+					"image-url": "https://img.youtube.com/vi/mQLqO-hCldU/maxresdefault.jpg",
+					"video-url": "https://www.youtube.com/watch?v=mQLqO-hCldU",
+					"win": ""
+				}			
+			]
+		}	
+	]
+}
