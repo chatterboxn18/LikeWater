@@ -1,0 +1,16 @@
+{
+	"enemies":[
+		{
+			"name":"Unnamed Pizza Boy",
+			"stats":{
+				"hp" : "100",
+				"defense":"0",
+				"dodge": "0.01",
+				"sp-defense":"0"
+			},
+			"sheet-name": "peekaboo-monster.png",
+			"sprite-index" : "0",
+			"customize-items" : "2"			
+		}
+	]
+}

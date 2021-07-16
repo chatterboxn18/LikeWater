@@ -2,8 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using SimpleJSON;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.WSA;
+using Application = UnityEngine.Application;
 
 namespace DungeonQuest
 {
@@ -14,6 +17,31 @@ namespace DungeonQuest
 		private int _upgradesPerRow = 6;
 		private int _upgradesPerColumn = 5;
 		public static Dictionary<int, List<Sprite>> Upgrades = new Dictionary<int, List<Sprite>>();
+		public static List<List<Sprite>> Sprites = new List<List<Sprite>>();
+
+		private int _skinWidth = 450; 
+		private int _skinHeight = 450;
+
+		public class Enemy
+		{
+			public string Name;
+			public Stats EnemyStat = new Stats();
+			public struct Stats
+			{
+				public int HP;
+				public int Defense;
+				public float Dodge;
+				public int SpDefense;
+
+			}
+			public Art[] EnemyArt;
+			public struct Art
+			{
+				public Sprite MainSprite;
+				public Sprite[] Extensions;
+			}
+			
+		} 
 		
 		public static Dictionary<DQCharacterData.RedVelvet, Color32> Colors = new Dictionary<DQCharacterData.RedVelvet, Color32>
 		{
@@ -28,14 +56,11 @@ namespace DungeonQuest
 		{
 			DQCharacterData.current.Setup(
 				(DQCharacterData) SerializationManager.Load(Application.persistentDataPath + "/saves/" + DQConfig.SaveName + ".rv"));
-			yield return DownloadFile("DungeonQuest/redvelvet-upgrades.png", (success, path) =>
-			{
-				if (success)
-				{
-					
-				}
-			});
+
+			yield return DownloadJsonFiles();
 			yield return GetUpgrades();
+			yield return GetSkins();
+			
 			_isReady = true;
 		}
 		
@@ -80,11 +105,41 @@ namespace DungeonQuest
 
 		}
 
+		private IEnumerator DownloadJsonFiles()
+		{
+			//get list from config in the future
+			var list = new List<string>() {"enemies.json"};
+			foreach (var item in list)
+			{
+				var finalPath = "";
+				var succeed = false;
+				var serverPath =Path.Combine(DQConfig.FolderName, item);
+				yield return DownloadFile(serverPath, (success, path) =>
+				{
+					succeed = success; 
+					finalPath = path;
+				});
+				if (!succeed) Debug.LogError("Request return null for json: " + item); yield break;
+			}
+		}
+		
 		private IEnumerator GetUpgrades()
 		{
+			var relativePath = Path.Combine(DQConfig.FolderName, "redvelvet-upgrades.png");
+			if (!File.Exists(Path.Combine(Application.persistentDataPath, relativePath)))
+			{
+				var succeeded = false;
+				yield return DownloadFile("DungeonQuest/redvelvet-upgrades.png", (success, path) =>
+				{
+					succeeded = success;
+				});
+				if (!succeeded) Debug.LogError("Download of " + "redvelvet-upgrades.png" + " failed.");
+			}
+			
+			
 			DownloadHandler request = null;
 			var succeed = false;
-			yield return GetTexture("DungeonQuest/redvelvet-upgrades.png", (success, handler) =>
+			yield return GetTexture(relativePath, (success, handler) =>
 			{
 				succeed = success; 
 				request = handler;
@@ -108,6 +163,36 @@ namespace DungeonQuest
 				}
 
 				Upgrades[_upgradesPerColumn -1 - i] = spriteList;
+			}
+		}
+
+		private IEnumerator GetSkins()
+		{
+			DownloadHandler request = null;
+			var succeed = false;
+			yield return GetTexture("DungeonQuest/peekaboo-spritesheet.png", (success, handler) =>
+			{
+				succeed = success; 
+				request = handler;
+			});
+
+			if (request == null) yield break;
+
+			var texture = ((DownloadHandlerTexture) request).texture;
+
+			var rows = Mathf.RoundToInt((float) texture.height / _skinHeight);
+			for (var i = 0; i <10; i++) // always ten as for now
+			{
+				var spriteList = new List<Sprite>();
+				for (var j = 0; j < rows; j++)
+				{
+					var sprite = Sprite.Create(texture,
+						new Rect(i* _skinWidth, j * _skinHeight, _skinWidth, _skinHeight),
+						new Vector2(0.5f, 0.5f));
+					spriteList.Add(sprite);
+				}
+
+				Sprites.Add(spriteList);
 			}
 		}
 		
