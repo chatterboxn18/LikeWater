@@ -130,7 +130,6 @@ namespace LikeWater
 		private IEnumerator DownloadFiles()
 		{
 			var configPath = "";
-			var noInternet = false;
 			yield return DownloadFile(LWConfig.ConfigFile, (success, path) =>
 			{
 				if (success)
@@ -141,7 +140,6 @@ namespace LikeWater
 
 			if (string.IsNullOrEmpty(configPath))
 			{
-				noInternet = true;
 				if (File.Exists(Application.persistentDataPath + Path.DirectorySeparatorChar + LWConfig.ConfigFile))
 				{
 					configPath = Application.persistentDataPath + Path.DirectorySeparatorChar + LWConfig.ConfigFile;

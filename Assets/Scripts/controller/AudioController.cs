@@ -6,6 +6,7 @@ using UnityEngine;
 public class AudioController : MonoBehaviour
 {
 	private AudioSource _audioSource;
+	[SerializeField] private AudioSource _prefab;
 
 	public AudioSource Source => _audioSource;
 	
@@ -14,22 +15,23 @@ public class AudioController : MonoBehaviour
 	private float _volume;
 	private float _time = 0.3f;
 
-	public enum AudioClip
+	
+	
+	public enum ClipName
 	{
-		TakeABreak = 0, 
-		Wow = 1
+		Magic
 	}
 
 	[SerializeField] private List<AudioClip> _clips;
 
-	private static Dictionary<AudioClip, AudioClip> _audioClips = new Dictionary<AudioClip, AudioClip>();
+	private static Dictionary<ClipName, AudioClip> _audioClips = new Dictionary<ClipName, AudioClip>();
 	
 	private void Awake()
 	{
 		_audioSource = GetComponent<AudioSource>();
 		for (var i = 0; i < _clips.Count;i++)
 		{
-			_audioClips.Add((AudioClip) i, _clips[i]);
+			_audioClips.Add((ClipName) i, _clips[i]);
 		}
 	}
 
@@ -40,6 +42,23 @@ public class AudioController : MonoBehaviour
 		else
 			_audioSource.gameObject.LeanValue(1, 0, LWConfig.FadeTime).setOnUpdate((float val) => _audioSource.volume =val);
 	}*/
+
+	public void CreateAudio(ClipName clip)
+	{
+		var audio = Instantiate(_prefab);
+		audio.clip = _audioClips[clip];
+		audio.Play();
+		StartCoroutine(DestroyWhenStop(audio));
+	}
+
+	private IEnumerator DestroyWhenStop(AudioSource source)
+	{
+		while (source.isPlaying)
+		{
+			yield return null;
+		}
+		Destroy(source.gameObject);
+	}
 	
 	public void FadeAudio(bool isUp, float time)
 	{

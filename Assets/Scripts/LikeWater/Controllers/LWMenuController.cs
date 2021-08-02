@@ -89,7 +89,6 @@ namespace LikeWater
 
 		private void TransitionOn(Pages to)
 		{
-			var timer = 0f;
 			//_buttonContainer.LeanAlpha(0, LWConfig.FadeTime);
 			_buttonContainer.interactable = false;
 			_buttonContainer.blocksRaycasts = false;

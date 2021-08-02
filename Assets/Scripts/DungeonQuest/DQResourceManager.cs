@@ -2,10 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using SimpleJSON;
 using UnityEngine;
 using UnityEngine.Networking;
-using UnityEngine.WSA;
 using Application = UnityEngine.Application;
 
 namespace DungeonQuest
@@ -17,10 +15,39 @@ namespace DungeonQuest
 		private int _upgradesPerRow = 6;
 		private int _upgradesPerColumn = 5;
 		public static Dictionary<int, List<Sprite>> Upgrades = new Dictionary<int, List<Sprite>>();
+		
 		public static List<List<Sprite>> Sprites = new List<List<Sprite>>();
 
 		private int _skinWidth = 450; 
 		private int _skinHeight = 450;
+
+		//Debug 
+		[SerializeField] private List<UpgradeCard> _upgradeList = new List<UpgradeCard>();
+		public List<List<UpgradeCard>> FullList = new List<List<UpgradeCard>>();
+
+		public static List<UpgradeCard> UpgradeList = new List<UpgradeCard>();
+		
+		public enum BoostType
+		{
+			Attack,
+			Speed,
+			Magic
+		}
+		
+		[Serializable]
+		public class UpgradeCard
+		{
+			public DQCharacterData.RedVelvet Character;
+			public int SpriteIndex;
+			public BoostType Type;
+			public float BoostPercent;
+			public float BoostAmount;
+			public int BasePrice;
+			public float PriceInflation;
+			//TEMP DATA
+			public int Level;
+			public int Price;
+		}
 
 		public class Enemy
 		{
@@ -54,6 +81,8 @@ namespace DungeonQuest
 
 		private IEnumerator Start()
 		{
+			UpgradeList = _upgradeList;
+			
 			DQCharacterData.current.Setup(
 				(DQCharacterData) SerializationManager.Load(Application.persistentDataPath + "/saves/" + DQConfig.SaveName + ".rv"));
 
@@ -241,8 +270,8 @@ namespace DungeonQuest
 			Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height),
 				new Vector2(0.5f, 0.5f));
 			return sprite;
-
 		}
+		
 	}
 
 }

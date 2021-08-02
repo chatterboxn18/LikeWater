@@ -63,9 +63,21 @@ namespace DungeonQuest
 			character.CritPercent = 0.01f;
 			character.AttackDamage = 1;
 			character.OutfitIndex = 0;
-			character.WeaponIndex = (int) name; // their first weapon index will be their ordered number 
 			return character;
 		}
+
+		public class Card
+		{
+			public Character Character;
+			public int Index;
+			public int Level;
+			public int Rarity;
+			public int Price; 
+		}
+
+		private static Dictionary<RedVelvet, List<Card>> _cardCollection = new Dictionary<RedVelvet, List<Card>>();
+		public static Dictionary<RedVelvet, List<Card>> CardCollection => _cardCollection;
+
 	}
 
 }

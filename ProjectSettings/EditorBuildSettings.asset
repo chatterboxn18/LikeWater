@@ -6,15 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 0
-    path: Assets/Scenes/SkateRental.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
-  - enabled: 0
-    path: Assets/Scenes/IceCreamShop.unity
-    guid: 8a1e4179043ca1a488c5b877f2ccf812
-  - enabled: 0
-    path: Assets/Scenes/MMMAU.unity
-    guid: ba00c8d9959177e49aaaea8df9b53cf0
-  - enabled: 1
     path: Assets/Scenes/LikeWater.unity
     guid: a43904d5f3480134fb06ac92626ce97c
+  - enabled: 1
+    path: Assets/Scenes/DungeonQuest.unity
+    guid: cbaac7a972b5d6a46b3d9f623d4a1dcc
   m_configObjects: {}

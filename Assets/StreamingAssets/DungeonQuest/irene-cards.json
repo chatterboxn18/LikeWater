@@ -1,0 +1,92 @@
+{
+	"irene-cards": [
+		{
+			"character": "Irene",
+			"spriteIndex": "0",
+			"type" : "Attack",
+			"parameters": "1.05",
+			"base-price" : "10", 
+			"price-inflation" : "1.05"
+		},
+		{
+			"character": "Irene",
+			"spriteIndex": "1",
+			"type" : "Attack",
+			"parameters": "20",
+			"base-price" : "20", 
+			"price-inflation" : "1.05"
+		}
+	],
+	"seulgi-cards": [
+		{
+			"character": "Seulgi",
+			"spriteIndex": "0",
+			"type" : "Attack",
+			"parameters": "1.03",
+			"base-price" : "10", 
+			"price-inflation" : "1.03"
+		},
+		{
+			"character": "Seulgi",
+			"spriteIndex": "1",
+			"type" : "Magic",
+			"parameters": "1.03",
+			"base-price" : "10", 
+			"price-inflation" : "1.03"
+		}
+	],
+	"wendy-cards": [
+		{
+			"character": "Wendy",
+			"spriteIndex": "0",
+			"type" : "Magic",
+			"parameters": "1.02",
+			"base-price" : "10", 
+			"price-inflation" : "1.03"
+		},
+		{
+			"character": "Wendy",
+			"spriteIndex": "1",
+			"type" : "Magic",
+			"parameters": "20",
+			"base-price" : "15", 
+			"price-inflation" : "1.05"
+		}
+	],
+	"joy-cards": [
+		{
+			"character": "Joy",
+			"spriteIndex": "0",
+			"type" : "Attack",
+			"parameters": "1.05",
+			"base-price" : "12", 
+			"price-inflation" : "1.04"
+		},
+		{
+			"character": "Joy",
+			"spriteIndex": "1",
+			"type" : "Attack",
+			"parameters": "30",
+			"base-price" : "50", 
+			"price-inflation" : "1.04"
+		}
+	],
+	"yeri-cards": [
+		{
+			"character": "Yeri",
+			"spriteIndex": "0",
+			"type" : "Attack",
+			"parameters": "1.03",
+			"base-price" : "10", 
+			"price-inflation" : "1.02"
+		},
+		{
+			"character": "Yeri",
+			"spriteIndex": "1",
+			"type" : "Attack",
+			"parameters": "10",
+			"base-price" : "5", 
+			"price-inflation" : "1.01"
+		}
+	]
+}

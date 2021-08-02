@@ -10,6 +10,7 @@ public class SimpleButton : Selectable, IPointerClickHandler
 {
 	private bool _isSelected;
 	[SerializeField] private bool _isVisible = true;
+	[SerializeField] private bool _isDisabled = false;
 
 	public Image MainImage => targetGraphic.GetComponent<Image>();
 	public RectTransform RectTransform => _rectTransform;
@@ -87,21 +88,21 @@ public class SimpleButton : Selectable, IPointerClickHandler
 
 	public override void OnPointerUp(PointerEventData eventData)
 	{
-		if (!_isVisible) return;
+		if (!_isVisible ||_isDisabled) return;
 		EvtPointerUp.Invoke(arg0: eventData);
 		Evt_BasicEvent_Up();
 	}
 
 	public override void OnPointerDown(PointerEventData eventData)
 	{
-		if (!_isVisible) return;
+		if (!_isVisible || _isDisabled) return;
 		EvtPointerDown.Invoke(arg0: eventData);
 		Evt_BasicEvent_Down();
 	}
 
 	public void OnPointerClick(PointerEventData eventData)
 	{
-		if (!_isVisible) return;
+		if (!_isVisible || _isDisabled) return;
 		EvtPointerClick.Invoke(arg0: eventData);
 		Evt_BasicEvent_Click();
 	}
