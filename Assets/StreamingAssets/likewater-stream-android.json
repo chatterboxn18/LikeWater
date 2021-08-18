@@ -34,26 +34,25 @@
 					"win": ""
 				},
 				{
+					"title": "[MV] Queendom",
+					"date": "2021-08-16",
+					"image-url": "https://img.youtube.com/vi/c9RzZpV460k/maxresdefault.jpg",
+					"video-url": "https://www.youtube.com/watch?v=c9RzZpV460k",
+					"win": ""
+				},
+				{
+					"title": "[MV] Hello",
+					"date": "2021-05-31",
+					"image-url": "https://img.youtube.com/vi/lNvBbh5jDcA/maxresdefault.jpg",
+					"video-url": "https://www.youtube.com/watch?v=lNvBbh5jDcA",
+					"win": ""
+				},
+				{
 					"title": "[MV] Monster",
 					"date": "2020-07-06",
 					"image-url": "https://img.youtube.com/vi/Ujb-gvqsoi0/maxresdefault.jpg",
 					"video-url": "https://www.youtube.com/watch?v=Ujb-gvqsoi0",
 					"win": ""
-				},
-				{
-					"title": "[MV] Naughty",
-					"date": "2020-07-19",
-					"image-url": "https://img.youtube.com/vi/wCWoUUWwdqg/maxresdefault.jpg",
-					"video-url": "https://www.youtube.com/watch?v=wCWoUUWwdqg",
-					"win": ""
-				},
-				{
-					"title": "[MV] Psycho",
-					"date": "2019-12-23",
-					"image-url": "https://img.youtube.com/vi/uR8Mrt1IpXg/maxresdefault.jpg",
-					"video-url": "https://www.youtube.com/watch?v=uR8Mrt1IpXg",
-					"win": ""
-				}
-			
+				}		
 		}
 }
