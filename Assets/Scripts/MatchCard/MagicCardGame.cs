@@ -26,7 +26,7 @@ namespace Queendom
 
 		[Header("Character Cards")]
 		[SerializeField] private List<CharacterCard> CardList;
-		private int _selectedCharacters;
+    private List<MagicCharacter> _selectedCharacters = new List<MagicCharacter>();
 		private Dictionary<QueendomConfig.Character, CharacterCard> _charactersInPlay = new Dictionary<QueendomConfig.Character, CharacterCard>();
 	
 		[Header("Spell Deck")]
@@ -76,23 +76,51 @@ namespace Queendom
 		public void ButtonEvt_SelectCharacter(int character)
 		{
 			var card = _charactersInPlay[(QueendomConfig.Character) character].Card;
-			if (_selectedCharacters < _currentItemAmount && !card.IsSelected)
+			if (_selectedCharacters.Count < _currentItemAmount && !card.IsSelected)
 			{
-				_charactersInPlay[(QueendomConfig.Character) character].Card.ButtonEvt_Select();
-				if (card.IsSelected) _selectedCharacters++;
-				else _selectedCharacters--;
-			}
-			else if (card.IsSelected)
+        if (!card.IsSelected)
+        {
+          _selectedCharacters.Add(card);
+          _charactersInPlay[(QueendomConfig.Character)character].Card.Evt_Select(true, GetPositionString(_selectedCharacters.Count));
+        }
+        else { 
+          _selectedCharacters.Remove(card);
+          _charactersInPlay[(QueendomConfig.Character)character].Card.Evt_Select(false);
+          for (var i = 0; i < _selectedCharacters.Count; i++)
+          {
+            _selectedCharacters[i].Evt_Select(true, GetPositionString(i + 1));
+          }
+        }
+      }
+      else if (card.IsSelected)
 			{
-				_charactersInPlay[(QueendomConfig.Character) character].Card.ButtonEvt_Select();
-				_selectedCharacters--;
-			}
-			_castButton.SetVisibility(_selectedCharacters == _currentItemAmount);
+        _charactersInPlay[(QueendomConfig.Character) character].Card.Evt_Select(false);
+        _selectedCharacters.Remove(card);
+        for (var i = 0; i < _selectedCharacters.Count; i++)
+        {
+          _selectedCharacters[i].Evt_Select(true, GetPositionString(i + 1));
+        }
+      }
+			_castButton.SetVisibility(_selectedCharacters.Count == _currentItemAmount);
 		}
 		
 		public void ResetField()
 		{
-			
+      /*foreach (var character in _charactersInPlay)
+      {
+        character.Value.Card.gameObject.SetActive(true);
+      }*/
+      foreach (var select in _selectedCharacters)
+      {
+        select.Evt_Select(false);
+      }
+      _selectedCharacters.Clear();
+      foreach (var item in _itemCards)
+      {
+        item.Card.gameObject.SetActive(false);
+      }
+      SetEnemies();
+      ButtonEvt_FlipDeck();
 		}
 
 		public void ButtonEvt_FlipDeck()
@@ -110,14 +138,41 @@ namespace Queendom
 
 		private void Evt_Upgrade(QueendomConfig.Character character, int value, Action onSuccess)
 		{
-			if (!_charactersInPlay.ContainsKey(character)) return;
+      if (!_charactersInPlay.ContainsKey(character)) return;
+      if (!_charactersInPlay[character].Card.gameObject.activeSelf) return;
 			_charactersInPlay[character].Card.AddValue(value);
 			onSuccess();
 		}
 
-		private void ButtonEvt_Cast()
+		public void ButtonEvt_Cast()
 		{
-		
-		}
-	}
+		  for (var i = 0; i < _selectedCharacters.Count; i++)
+      {
+        if (_selectedCharacters[i].Value >= _itemCards[i].Value)
+        {
+          _selectedCharacters[i].SetText(_selectedCharacters[i].Value - _itemCards[i].Value);
+        }
+        else
+        {
+          _selectedCharacters[i].gameObject.SetActive(false);
+        }
+      }
+      ResetField();
+    }
+
+    private string GetPositionString(int index)
+    {
+      switch (index)
+      {
+        case 1:
+          return "1st";
+        case 2:
+          return "2nd";
+        case 3:
+          return "3rd";
+        default:
+          return index + "th";
+      }
+    }
+  }
 }
