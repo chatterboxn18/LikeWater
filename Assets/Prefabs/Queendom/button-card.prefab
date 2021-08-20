@@ -202,6 +202,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _textBox: {fileID: 2125852373427235440}
+  _image: {fileID: 2125852373448260207}
+  _fadeParticles: {fileID: 2278646266439804121, guid: 41a0f28f5594705459acefb4ca16d6cd,
+    type: 3}
 --- !u!1 &2125852373427235454
 GameObject:
   m_ObjectHideFlags: 0
