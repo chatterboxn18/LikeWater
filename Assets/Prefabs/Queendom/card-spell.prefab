@@ -5191,9 +5191,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e92f79a7d5540d4290487ce7c9ae9b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _iconPrefab: {fileID: 4282153157996041092, guid: 65ffe9156092a774e8e440fb4e702f1a,
+  _iconPrefab: {fileID: 5485428612003975019, guid: 65ffe9156092a774e8e440fb4e702f1a,
     type: 3}
   _spellContainer: {fileID: 8732179030299673545}
+  _textValue: {fileID: 7230945820864773449}
   _colors:
   - {r: 1, g: 0.7137255, b: 1, a: 1}
   - {r: 1, g: 0.93725497, b: 0.5137255, a: 1}
