@@ -19,7 +19,6 @@ namespace LikeWater
 		private int _goal = 64;
 		private int _drinkCount = 0;
 		[SerializeField] private Image _fillOutline;
-		private int _maxAttributeCount = 6;
 		private Dictionary<string, int> _activeAttributes = new Dictionary<string, int>();
 
 		[SerializeField] private LWFlowerGroup _activeFlower;
@@ -39,6 +38,9 @@ namespace LikeWater
 		[SerializeField] private Color _selectedColor;
 		[SerializeField] private Transform _drinkIconContainer;
 		[SerializeField] private SimpleButton _drinkIconPrefab;
+		
+		//Collection Values 
+		[SerializeField] private LWCardManager _cardManager;
 
 		private LWData.FlowerMonth _currentFlower
 		{
@@ -316,6 +318,7 @@ namespace LikeWater
 				LWTransitionController.PopupError(LWTransitionController.Toasts.TextMessage, "+ " + flower.Earns);
 				_audioSource.Play();
 				SerializationManager.Save(LWConfig.DataSaveName, LWData.current);
+				_cardManager.UnlockCard(currentFlower.PlantIndex);
 				//IMPORTANT: need to place before a save
 			}
 		}

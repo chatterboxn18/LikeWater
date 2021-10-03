@@ -9,11 +9,13 @@ namespace LikeWater
 	{
 		private List<LWResourceManager.Music> _musicList;
 
+#pragma warning disable 0649
 		[SerializeField] private LWMusicPage _musicPagePrefab;
 		[SerializeField] private RectTransform _currentPage;
 		[SerializeField] private RectTransform _nextPage;
 
 		[SerializeField] private RectTransform _pagesContainer;
+#pragma warning restore 0649
 		private Dictionary<int, Transform> _pages = new Dictionary<int, Transform>();
 		
 		private Vector2 _nextLocation;

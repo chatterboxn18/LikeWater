@@ -558,6 +558,7 @@ MonoBehaviour:
   m_Interactable: 1
   m_TargetGraphic: {fileID: 2222562984734692005}
   _isVisible: 1
+  _isDisabled: 0
   canvasGroup: {fileID: 2868365445889654804}
   EvtPointerDown:
     m_PersistentCalls:
@@ -580,7 +581,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 202ec1b7ee2255e499a4b6ce5e594982, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _loaderGroup: {fileID: 0}
+  _loaderGroup: {fileID: 2868365445889654804}
   _thumbnail: {fileID: 711331264509565247}
   _titleText: {fileID: 5548198525221478850}
   _button: {fileID: 2017280071496540877}

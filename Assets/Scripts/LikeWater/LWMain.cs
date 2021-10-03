@@ -31,6 +31,9 @@ namespace LikeWater
 		[SerializeField] private Sprite _emptyPot;
 		
 		private DateTime _todayDate;
+
+		[SerializeField] private LWStreakController _streakPopup;
+		[SerializeField] private LWInstructionsController _instructionsPopup;
 	
 		private LWData.FlowerMonth _currentFlower
 		{
@@ -64,6 +67,27 @@ namespace LikeWater
 			}
 			Evt_UpdateActiveFlower();
 			Evt_UpdateCoins();
+			
+			if (PlayerPrefs.HasKey(LWConfig.StreakDay))
+			{
+				var date = PlayerPrefs.GetString(LWConfig.StreakDay);
+				var hasDate = DateTime.TryParse(date, out var streak);
+				if (hasDate)
+				{
+					if (streak.ToShortDateString() != DateTime.Today.ToShortDateString())
+						_streakPopup.Evt_OpenPopup();
+				}
+			}
+			else
+			{
+				_streakPopup.Evt_OpenPopup();
+			}
+			
+			if (!PlayerPrefs.HasKey(LWConfig.FirstInstructions))
+			{
+				_instructionsPopup.Evt_OpenPopup();
+				PlayerPrefs.SetInt(LWConfig.FirstInstructions, 1);
+			}
 			//Show last displayed flower 
 			//todo: HERE
 	

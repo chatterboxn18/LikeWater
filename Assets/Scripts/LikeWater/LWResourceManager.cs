@@ -92,12 +92,15 @@ namespace LikeWater
 
 			LWData.current.Setup(
 				(LWData) SerializationManager.Load(Application.persistentDataPath + "/saves/likewater.rv"));
+			LWCardData.current.Setup(
+				(LWCardData) SerializationManager.Load(Application.persistentDataPath + "/saves/likewater-cards.rv"));
 			PrepareData();
 			yield return DownloadFiles();
 			yield return GetVideos();
 			yield return GetFlowers();
 			yield return GetSprites();
 			yield return GetDrinkIcons();
+			yield return GetInstructions();
 			yield return GetNews();
 			yield return GetStreams();
 			_isLoaded = true;
@@ -424,12 +427,16 @@ namespace LikeWater
 
 			if (request == null) yield break;
 
+			if (!succeed)
+			{
+				Debug.LogError("Texture " + "likewater-drinks.png" + " failed to download");
+			}
+			
 			var texture = ((DownloadHandlerTexture) request).texture;
 
 			var width = 300;
 			var height = 300;
 			var spriteCount = Mathf.RoundToInt((float) texture.height / _spriteHeight);
-			var counter = 0;
 			var spriteList = new List<Sprite>();
 			for (var i = 0; i < spriteCount; i++)
 			{
@@ -445,6 +452,48 @@ namespace LikeWater
 			_drinkIcons = spriteList;
 		}
 
+#region Instructions
+		
+		private static List<Sprite> _instructionsScreens;
+		public static List<Sprite> Instructions => _instructionsScreens;
+		
+		private IEnumerator GetInstructions()
+		{
+			DownloadHandler request = null;
+			var succeed = false;
+			yield return GetTexture("likewater-instructions.png", (success, handler) =>
+			{
+				succeed = success; 
+				request = handler;
+			});
+		
+			if (request == null) yield break;
+		
+			if (!succeed)
+			{
+				Debug.LogError("Texture " + "likewater-instructions.png" + " failed to download");
+			}
+			
+			var texture = ((DownloadHandlerTexture) request).texture;
+			
+			var width = 1080;
+			var height = 1920;
+			var spriteCount = Mathf.RoundToInt((float) texture.width / width);
+			var spriteList = new List<Sprite>();
+			for (var i = 0; i < spriteCount; i++)
+			{
+				var sprite = Sprite.Create(texture,
+					new Rect(i * width, 0, width, height),
+					new Vector2(0.5f, 0.5f));
+				spriteList.Add(sprite);
+			}
+		
+			_instructionsScreens = spriteList;
+		}
+
+#endregion
+		
+		
 		private IEnumerator GetSprites()
 		{
 			DownloadHandler request = null;
@@ -523,7 +572,7 @@ namespace LikeWater
 			}
 			catch (Exception e)
 			{
-				Debug.LogError("The url didn't download correctly " + url);
+				Debug.LogError("The url didn't download correctly " + url + " And the error was " + e);
 			}
 
 			yield return null;

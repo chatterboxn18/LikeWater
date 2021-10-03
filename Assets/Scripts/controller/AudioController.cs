@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,8 +11,6 @@ public class AudioController : MonoBehaviour
 
 	public AudioSource Source => _audioSource;
 	
-	private bool isUp = false;
-
 	private float _volume;
 	private float _time = 0.3f;
 
@@ -60,20 +59,26 @@ public class AudioController : MonoBehaviour
 		Destroy(source.gameObject);
 	}
 	
-	public void FadeAudio(bool isUp, float time)
+	public void FadeAudio(bool isUp, float time, Action onComplete = null)
 	{
-		StartCoroutine(FadeIn(isUp, time));
+		if (!isUp && _audioSource.volume <= 0.001f)
+		{
+			_audioSource.Stop();
+			return;
+		}
+		StartCoroutine(FadeIn(isUp, time, onComplete));
 	}
 
-	private IEnumerator FadeIn(bool on, float time)
+	private IEnumerator FadeIn(bool on, float time, Action onComplete = null)
 	{
 		var timer = 0f;
+		var currentVolume = _audioSource.volume;
 		if (on)
 		{
 			_audioSource.Play();
 			while (timer < _time)
 			{
-				_audioSource.volume = Mathf.Lerp(0,1, timer/_time);
+				_audioSource.volume = Mathf.Lerp(0,currentVolume, timer/_time);
 				timer += Time.deltaTime;
 				yield return null;
 			}
@@ -82,11 +87,13 @@ public class AudioController : MonoBehaviour
 		{
 			while (timer < _time)
 			{
-				_audioSource.volume = Mathf.Lerp(1,0, timer/_time);
+				_audioSource.volume = Mathf.Lerp(currentVolume,0, timer/_time);
 				timer += Time.deltaTime;
 				yield return null;
 			}
 			_audioSource.Stop();
 		}
+
+		onComplete?.Invoke();
 	}
 }

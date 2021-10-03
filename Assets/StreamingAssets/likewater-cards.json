@@ -1,0 +1,33 @@
+{
+	"0": 
+	{
+		"unlock-amount": "5",
+		"member" : "",
+		"sheet-name" : "likewater-cardsheet-0.png",
+		"sheet-index": "0,0"
+	},
+	"1": {
+		"unlock-amount": "5",
+		"member" : "",
+		"sheet-name" : "likewater-cardsheet-0.png",
+		"sheet-index": "1,0"
+	},
+	"2": {
+		"unlock-amount": "5",
+		"member" : "",
+		"sheet-name" : "likewater-cardsheet-0.png",
+		"sheet-index": "2,0"
+	},
+	"3": {
+		"unlock-amount": "5",
+		"member" : "",
+		"sheet-name" : "likewater-cardsheet-0.png",
+		"sheet-index": "3,0"
+	},
+	"4": {
+		"unlock-amount": "5",
+		"member" : "",
+		"sheet-name" : "likewater-cardsheet-0.png",
+		"sheet-index": "4,0"
+	}
+}

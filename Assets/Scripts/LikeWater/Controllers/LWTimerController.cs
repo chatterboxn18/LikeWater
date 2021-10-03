@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace LikeWater
 {
@@ -19,6 +20,9 @@ namespace LikeWater
 		[SerializeField] private AdvanceButton _notificationButton; 
 		[SerializeField] private AdvanceButton _soundButton;
 
+		[SerializeField] private Slider _volumeSlider;
+		private float _volumeSetting = 1f;
+
 		private bool _hasNotification = true;
 		private bool _isButtonPress = false;
 		protected override void Start()
@@ -30,18 +34,28 @@ namespace LikeWater
 		private void OnEnable()
 		{
 			_timeController.DisplayTimer(false);
+			
+			if (PlayerPrefs.HasKey(LWConfig.VolumeSetting))
+			{
+				var volume = PlayerPrefs.GetFloat(LWConfig.VolumeSetting);
+				SliderEvt_Volume(volume);
+				_volumeSlider.value = volume;
+			}
+			// Has Sound after slider so it will still mute accordingly after adjusting volume
 			if (PlayerPrefs.HasKey(LWConfig.HasSound))
 			{
 				var on = PlayerPrefs.GetInt(LWConfig.HasSound);
 				if (on == 1)
 				{
 					_soundButton.SetActive(true);
+					_timeController.SetMute(false);
 					_hasAudio = true;
 				}
 				else
 				{
 					_soundButton.SetActive(false);
-					_hasNotification = false;
+					_timeController.SetMute(true);
+					_hasAudio = false;
 				}
 			}
 			if (PlayerPrefs.HasKey(LWConfig.HasNotification))
@@ -123,6 +137,24 @@ namespace LikeWater
 		{
 			_timeController.DisplayTimer(true);
 		}
+
+		public void SliderEvt_Volume(float volume)
+		{
+			//_volumeSetting = volume;
+			
+			if (volume <= 0)
+			{
+				_soundButton.SetActive(false);
+				return;
+			}
+
+			_timeController.SetVolume(volume);
+			if (_hasAudio)
+				_soundButton.SetActive(true);
+			_volumeSetting = volume;
+			PlayerPrefs.SetFloat(LWConfig.VolumeSetting,volume);
+
+		}
 		
 		public void ButtonEvt_StartTimer()
 		{
@@ -150,7 +182,9 @@ namespace LikeWater
 		public void ButtonEvt_EnableAudio()
 		{
 			_hasAudio = !_hasAudio;
+			//SliderEvt_Volume(_hasAudio ? _volumeSetting:0f);
 			_soundButton.SetActive(_hasAudio);
+			_timeController.SetMute(!_hasAudio);
 			PlayerPrefs.SetInt(LWConfig.HasSound, _hasAudio ? 1:0);
 		}
 	}

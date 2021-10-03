@@ -1,7 +1,7 @@
 {
 	"config" : 
 	{
-		"last-update" : "2021-08-17",
+		"last-update" : "2021-09-29",
 		"files" : 
 		[
 			"likewater-pots.json",
@@ -9,7 +9,8 @@
 			"likewater-drinks.png",
 			"likewater-flowers.png",
 			"likewater-news.json",
-			"likewater-stream-android.json"
+			"likewater-stream-android.json",
+			"likewater-cards.json"
 		]
 	}
 }

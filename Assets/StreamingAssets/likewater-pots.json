@@ -20,6 +20,20 @@
 			"Index": "2",
 			"Cost": "50",
 			"Earns": "80"
+		},
+		{
+			"Name":"",
+			"Type": "Common",
+			"Index": "3",
+			"Cost": "0",
+			"Earns": "20"
+		},
+		{
+			"Name":"",
+			"Type": "Common",
+			"Index": "4",
+			"Cost": "0",
+			"Earns": "20"
 		}
 	]
 }

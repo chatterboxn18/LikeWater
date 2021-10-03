@@ -5,13 +5,13 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/LikeWater.unity
     guid: a43904d5f3480134fb06ac92626ce97c
   - enabled: 0
     path: Assets/Scenes/DungeonQuest.unity
     guid: cbaac7a972b5d6a46b3d9f623d4a1dcc
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/MatchCard.unity
     guid: 87cb1ef1eb5fb7b48bc29b0a1847e59b
   m_configObjects: {}

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.PerformanceData;
 using UnityEngine;
 
 public static class Extensions
@@ -102,5 +103,14 @@ public static class Extensions
 			transform.anchorMax = new Vector2(max.x, anchors.y);			
 		}
 		
+	}
+
+	public static void DestroyChildren(this Transform transform)
+	{
+		var count = transform.childCount;
+		for(var i = 0; i < count; i++)
+		{
+			Object.Destroy(transform.GetChild(i).gameObject);
+		}
 	}
 }

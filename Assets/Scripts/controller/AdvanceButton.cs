@@ -21,6 +21,12 @@ public class AdvanceButton : SimpleButton
 	{
 		_isActive = on;
 	}
+
+	public void SetToggle(bool on)
+	{
+		_isActive = on;
+		Evt_Toggle(on);
+	}
 	
 	public void Toggle()
 	{

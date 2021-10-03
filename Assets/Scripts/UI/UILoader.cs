@@ -67,7 +67,7 @@ public class UILoader : MonoBehaviour
 		}
 		catch (Exception e)
 		{
-			Debug.LogError("The url didn't download correctly " + path);
+			Debug.LogError("The url didn't download correctly " + path + e);
 		}
     
     			

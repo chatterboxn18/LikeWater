@@ -38,6 +38,7 @@ namespace LikeWater
 				return;
 			if (_displayMonth == date.Month && _displayYear == date.Year && !isPrevious)
 				return;
+			if (_displayYear == 2021 && _displayMonth == 1 && isPrevious) return; // return if year is before 2021
 			if (isPrevious)
 			{
 				if (_displayMonth == 1)
