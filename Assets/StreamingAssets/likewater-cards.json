@@ -29,5 +29,17 @@
 		"member" : "",
 		"sheet-name" : "likewater-cardsheet-0.png",
 		"sheet-index": "4,0"
+	},
+	"5": {
+		"unlock-amount": "5",
+		"member" : "",
+		"sheet-name" : "likewater-cardsheet-0.png",
+		"sheet-index": "0,1"
+	},
+	"6": {
+		"unlock-amount": "5",
+		"member" : "",
+		"sheet-name" : "likewater-cardsheet-0.png",
+		"sheet-index": "1,1"
 	}
 }

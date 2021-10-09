@@ -1,7 +1,16 @@
 {
 	"config" : 
 	{
-		"last-update" : "2021-09-29",
+		"last-update" : "2021-10-07",
+		"promo-messages":[
+			{
+				"title":"Update 1.0",
+				"description":"The app has been updated! Hope the small things make it a little more exciting to drink water!",
+				"photo": "promos/promos1.png",
+				"link":"https://www.youtube.com/watch?v=c9RzZpV460k",
+				"isBlocked": ""
+			}
+		],
 		"files" : 
 		[
 			"likewater-pots.json",
@@ -11,6 +20,15 @@
 			"likewater-news.json",
 			"likewater-stream-android.json",
 			"likewater-cards.json"
+		],
+		"streak-notes" : [
+			{"1":"Leggo, what matters the most is that you're drinking water!"},
+			{"2":"<b>Why Can't You Love Me</b> - Water"},
+			{"3":"Going strong! Keep it up!"},
+			{"4":"On <b>The Road</b> to living a hydrated life."},
+			{"5":"You must really... <b>Like Water</b>"},
+			{"6":"Even <b>When the Rain Stops</b>, you don't stop... drinking water"},
+			{"7":"Water is now officially your <b>Best Friend</b>"}
 		]
 	}
 }

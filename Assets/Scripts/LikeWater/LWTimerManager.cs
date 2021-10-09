@@ -36,6 +36,7 @@ namespace LikeWater
 			notification.SmallIcon = "icon_0";
 			notification.ShouldAutoCancel = true;
 			notification.FireTime = DateTime.Now.AddMinutes(time);
+			notification.Color = new Color(105, 170, 228);
 
 			_currentNotification = AndroidNotificationCenter.SendNotification(notification, LWConfig.NotificationChannel);
 #endif

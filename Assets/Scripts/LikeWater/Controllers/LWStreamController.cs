@@ -17,11 +17,11 @@ public class LWStreamController : MonoBehaviour
     private void Start()
     {
         var streamItem = LWResourceManager.StreamItem;
-        foreach (var app in streamItem.AppLinks)
+        /*foreach (var app in streamItem.AppLinks)
         {
             var appLink = Instantiate(_streamPrefab, _appContainer);
             appLink.SetItem(true, app.Name, app.Link);
-        }
+        }*/
 
         foreach (var video in streamItem.Videos)
         {

@@ -18,7 +18,7 @@ public static class LWConfig
 	public const string PageIndexName = "PageIndex";
 	public const string NotificationTitle = "Like Water";
 	public const string WaterNotificationDescription = "Time to quench your thrist. Let's drink some water <3";
-	public const string StreamNotificationDescription = "Let's make it like a river and stream like water.";
+	public const string StreamNotificationDescription = "Let's make it like a river and stream Like Water.";
 	public const string NotificationChannel = "like_water";
 	public const string ServerPath = "https://revelupgames.s3-us-west-1.amazonaws.com/LikeWaterDev/LikeWater/";
 	public const string ConfigFile = "likewater-config.json";

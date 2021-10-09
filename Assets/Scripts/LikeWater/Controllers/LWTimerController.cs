@@ -159,8 +159,14 @@ namespace LikeWater
 		public void ButtonEvt_StartTimer()
 		{
 			if (_isEdit) ButtonEvt_Edit();
+			
 			_isButtonPress = false;
 			var time = GetMinutes();
+			if (time <= 0)
+			{
+				LWTransitionController.PopupError(LWTransitionController.Toasts.TextMessage, "Edit a time first!");
+				return;
+			}
 			_timeController.Evt_StartTimer(time, _hasNotification, _hasAudio);
 		}
 	

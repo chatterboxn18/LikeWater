@@ -32,8 +32,8 @@ namespace LikeWater
 			}
 		}
 
-		private int _frameCount = 45;
-		private int _frame = 0;
+		private float _timer = 0;
+		private float _spriteSwitchTime = 0.5f;
 		private int _currentFrame = 0;
 
 		public void SetPlant(int indexOnShelf, Sprite[] sprites, string date = "")
@@ -86,21 +86,22 @@ namespace LikeWater
 
 		private void Update()
 		{
-			if (_frame >= _frameCount)
+			if (_timer >= _spriteSwitchTime)
 			{
-				var frame = _currentFrame == 0 ? 1 : 0;
-				_currentFrame = frame;
+				var frame = _currentFrame%2;
 				foreach (var item in _plants)
 				{
 					if (item.isActive)
 						item.Image.sprite = item.Sprites[frame];
 				}
 
-				_frame = 0;
+				_currentFrame++;
+				_timer = 0;
 				return;
 			}
 
-			_frame++;
+			_timer += Time.deltaTime;
+
 		}
 	}
 }

@@ -14,6 +14,7 @@ namespace LikeWater
 	{
 
 		[SerializeField] private TextMeshProUGUI _streakText;
+		[SerializeField] private TextMeshProUGUI _streakDescription;
 		private int _streakNumber;
 		[SerializeField] private List<AdvanceButton> _streakButtons;
 		[SerializeField] private Image _monthFill;
@@ -103,6 +104,8 @@ namespace LikeWater
 				PlayerPrefs.SetString(LWConfig.StreakDay, DateTime.Today.ToShortDateString());
 				PlayerPrefs.SetInt(LWConfig.StreakCounter, _streakNumber);
 			}
+
+			_streakDescription.text = LWResourceManager.StreakTexts[_streakNumber-1];
 		}
 
 		public void Evt_OpenPopup()

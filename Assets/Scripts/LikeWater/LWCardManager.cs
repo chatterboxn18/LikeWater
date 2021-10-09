@@ -112,8 +112,14 @@ namespace LikeWater
 			{
 				LWCardData.current.CollectedCards.Add(sheet, new Dictionary<int, LWCardData.FlowerCard>());
 			}
+
 			if (LWCardData.current.CollectedCards[sheet].ContainsKey(index))
-				yield break;
+			{
+				if (index < LWCardData.current.CollectedCards[sheet].Count)
+				{
+					yield break;
+				}
+			}
 			var newCard = new LWCardData.FlowerCard();
 			newCard.Member = member;
 			newCard.X = x;

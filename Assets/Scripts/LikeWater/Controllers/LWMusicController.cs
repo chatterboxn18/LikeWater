@@ -24,10 +24,15 @@ namespace LikeWater
 		private int _currentIndex = 0;
 
 		private bool _isTransitioning = false;
+		[SerializeField] private CanvasGroup _loaderGroup;
+		[SerializeField] private RectTransform _loaderfill;
 
 		protected override void Start()
 		{
 			base.Start();
+			_loaderGroup.alpha = 1;
+			_loaderGroup.gameObject.SetActive(true);
+			LeanTween.rotateZ(_loaderfill.gameObject, 360, LWConfig.FadeTime);
 			var sizeDelta = _currentPage.rect.width;
 			_nextLocation = new Vector2(sizeDelta, 0);
 			_prevLocation = new Vector2(-1 * sizeDelta, 0);
@@ -45,6 +50,10 @@ namespace LikeWater
 			}
 			_currentIndex = PlayerPrefs.GetInt(LWConfig.PageIndexName);
 			_pagesContainer.GetChild(_currentIndex).SetParent(_currentPage);
+			_loaderGroup.LeanAlpha(0, LWConfig.FadeTime).setOnComplete(() =>
+			{
+				_loaderGroup.gameObject.SetActive(false);
+			});
 		}
 
 

@@ -15,16 +15,23 @@ namespace LikeWater
 
 		[SerializeField] private TextMeshProUGUI _titleText;
 		[SerializeField] private TextMeshProUGUI _descriptionText;
+		[SerializeField] private SimpleButton _button;
+		[SerializeField] private SimpleButton _okayButton;
 		[SerializeField] private Image _image;
 
-		public void Build(string title, string description, Sprite sprite = null)
+		public void Build(LWResourceManager.Info info)
 		{
-			_titleText.text = title;
-			_descriptionText.text = description;
-			if (sprite != null)
-				_image.sprite = sprite;
+			_titleText.text = info.Title;
+			_descriptionText.text = info.Description;
+			if (info.Image != null)
+				_image.sprite = info.Image;
 			else
-				_image.gameObject.SetActive(false);
+				_button.gameObject.SetActive(false);
+			if (info.Link != null)
+			{
+				_button.Evt_BasicEvent_Click += ()=> Application.OpenURL(info.Link);
+			}
+			if (info.IsBlocker) _okayButton.SetVisibility(false);
 		}
 
 		public void Evt_OpenPopup()

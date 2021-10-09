@@ -33,6 +33,7 @@ namespace LikeWater
 		private DateTime _todayDate;
 
 		[SerializeField] private LWStreakController _streakPopup;
+		[SerializeField] private LWInfoController _infoPopup;
 		[SerializeField] private LWInstructionsController _instructionsPopup;
 	
 		private LWData.FlowerMonth _currentFlower
@@ -81,6 +82,12 @@ namespace LikeWater
 			else
 			{
 				_streakPopup.Evt_OpenPopup();
+			}
+
+			if (LWResourceManager.InfoList.Count > 0)
+			{
+				_infoPopup.Build(LWResourceManager.InfoList[0]);
+				_infoPopup.Evt_OpenPopup();
 			}
 			
 			if (!PlayerPrefs.HasKey(LWConfig.FirstInstructions))

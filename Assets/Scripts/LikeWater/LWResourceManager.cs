@@ -87,6 +87,18 @@ namespace LikeWater
 			public List<VideoItem> Videos;
 		}
 
+		public class Info
+		{
+			public string Title;
+			public string Description;
+			public Sprite Image = null;
+			public string Link;
+			public bool IsBlocker = false;
+		}
+
+		private static List<Info> _infoList = new List<Info>();
+		public static List<Info> InfoList => _infoList;
+		
 		private IEnumerator Start()
 		{
 
@@ -106,6 +118,65 @@ namespace LikeWater
 			_isLoaded = true;
 		}
 
+		private static List<string> _streakTexts;
+		public static List<string> StreakTexts => _streakTexts;
+		private void GetStreakText(JSONArray config)
+		{
+			_streakTexts = new List<string>();
+			var counter = 1;
+			foreach (var value in config)
+			{
+				var text = value.Value;
+				_streakTexts.Add(text["" + counter]);
+				counter++;
+			}
+		}
+
+		private IEnumerator GetPopupInfo(JSONArray config)
+		{
+			foreach (var value in config)
+			{
+				var popup = value.Value;
+				var info = new Info();
+				info.Title = popup["title"];
+				info.Description = popup["description"];
+				if (!string.IsNullOrEmpty(popup["photo"]))
+				{
+					yield return StreamImage(popup["photo"], (b, sprite) =>
+					{
+						if (b)
+						{
+							info.Image = sprite;
+						}
+					});
+				}
+				info.Link = popup["link"];
+				if (!string.IsNullOrEmpty(popup["isBlocked"]))
+					info.IsBlocker = popup["isBlocked"] == "true";
+				_infoList.Add(info);
+			}
+		}
+
+		private IEnumerator StreamImage(string localPath, Action<bool,Sprite> onComplete)
+		{
+			var url = LWConfig.ServerPath + localPath;
+			var request = UnityWebRequestTexture.GetTexture(url);
+			yield return request.SendWebRequest();
+			while (!request.isDone)
+				yield return null;
+			if (!string.IsNullOrEmpty(request.error))
+			{
+				Debug.LogError("Failed to stream image with error: " + request.error);
+				onComplete(false, null);
+				yield break;
+			}
+			var textureHandler = (DownloadHandlerTexture) request.downloadHandler;
+			var texture = textureHandler.texture;
+			var sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height),
+				new Vector2(0.5f, 0.5f));
+			onComplete(true, sprite);
+		}
+		
 		private void PrepareData()
 		{
 			var date = DateTime.Today;
@@ -167,6 +238,8 @@ namespace LikeWater
 			var config = data["config"];
 			var configDate = config["last-update"];
 
+			GetStreakText(config["streak-notes"].AsArray);
+			
 			if (PlayerPrefs.HasKey(LWConfig.LastModifiedKey))
 			{
 				if (configDate == PlayerPrefs.GetString(LWConfig.LastModifiedKey))
@@ -175,6 +248,8 @@ namespace LikeWater
 					yield break;
 				}
 			}
+
+			yield return GetPopupInfo(config["promo-messages"].AsArray);
 
 			var configFiles = config["files"].AsArray;
 			var hasError = false;
@@ -251,9 +326,12 @@ namespace LikeWater
 			onComplete(string.IsNullOrEmpty(request.error), request.downloadHandler);
 		}
 		
-		private IEnumerator GetTexture(string path, Action<bool, DownloadHandler> onComplete)
+		private IEnumerator GetTexture(string path, Action<bool, DownloadHandler> onComplete, bool downloaded = false)
 		{
+				
 			var uriBuilder = new UriBuilder(Path.Combine(Application.persistentDataPath,path));
+			if (!downloaded)
+				uriBuilder = new UriBuilder(Path.Combine(LWConfig.ServerPath, path));
 			var uri = uriBuilder.Uri;
 			var request = UnityWebRequestTexture.GetTexture(uri);
 			yield return request.SendWebRequest();

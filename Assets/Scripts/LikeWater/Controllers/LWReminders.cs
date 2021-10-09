@@ -27,9 +27,18 @@ namespace LikeWater
 		private int _selectedIndex;
 		private int _currentEditorIndex;
 		private string _selectedType;
+
+		[SerializeField] private Transform _reminders;
+		[SerializeField] private Transform _notSupported;
 		
 		protected  void Start()
 		{
+#if !UNITY_IOS || !UNITY_ANDROID
+			_reminders.gameObject.SetActive(false);
+			_notSupported.gameObject.SetActive(true);
+			return;
+#endif
+			
 			var counter = 0;
 			foreach (var reminder in LWData.current.Notifications)
 			{
