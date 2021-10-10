@@ -10,6 +10,8 @@ namespace LikeWater
 {
 	public class LWResourceManager : MonoBehaviour
 	{
+		private const string _jarLocation = "jar:file://";
+		
 		public enum MediaType
 		{
 			Image, 
@@ -543,7 +545,7 @@ namespace LikeWater
 			_drinkIcons = spriteList;
 		}
 
-#region Clips
+		#region Clips
 
 		private static List<SoundClip> _audioClips = new List<SoundClip>();
 		public static List<SoundClip> AudioClips =>_audioClips;
@@ -579,9 +581,9 @@ namespace LikeWater
 			}
 		}
 
-#endregion
+		#endregion
 		
-#region Instructions
+		#region Instructions
 		
 		private static List<Sprite> _instructionsScreens;
 		public static List<Sprite> Instructions => _instructionsScreens;
@@ -620,16 +622,14 @@ namespace LikeWater
 			_instructionsScreens = spriteList;
 		}
 
-#endregion
+		#endregion
 
 
 		private IEnumerator GetFlowerSprites()
 		{
 			DownloadHandler request = null;
-			var succeed = false;
 			yield return GetTexture("likewater-flowers.png", (success, handler) =>
 			{
-				succeed = success; 
 				request = handler;
 			});
 
@@ -670,28 +670,20 @@ namespace LikeWater
 
 		private IEnumerator GetMedia(string url, Action<MediaResult> onComplete, MediaType type = MediaType.Image, bool overwrite = false)
 		{
+			// If File Exists in persistent 
+			#region Persistent Check
+
+			var isLocal = false;
 			if (type == MediaType.Image)
 			{
-				// If File Exists in persistent 
 				if (File.Exists(Application.persistentDataPath + "/Images" + UrlParser(url)))
 				{
 					Sprite sprite = LoadSprite(Application.persistentDataPath + "/Images" + UrlParser(url));
 					onComplete(new MediaResult() {Sprite = sprite});
 					yield break;
 				}
-
-
-				// If file exists in streaming 
-				if (File.Exists(Application.streamingAssetsPath + "/Images" + UrlParser(url)))
-				{
-					Sprite sprite = LoadSprite(Application.streamingAssetsPath + "/Images" + UrlParser(url));
-					onComplete(new MediaResult() {Sprite = sprite});
-					yield break;
-				}
 			}
 
-
-			var isLocal = false;
 			if (type == MediaType.Audio)
 			{
 				if (File.Exists(Application.persistentDataPath + "/Audio/" + url) && !overwrite)
@@ -699,13 +691,11 @@ namespace LikeWater
 					url = Application.persistentDataPath + "/Audio/" + url;
 					isLocal = true;
 				}
-				else if (File.Exists(Application.streamingAssetsPath + "/Audio/" + url))
-				{
-					url = Application.streamingAssetsPath + "/Audio/" + url;
-					isLocal = true;
-				}
 			}
+			#endregion
 
+			#region CheckInternetAndCallHandler
+			
 			var request = new UnityWebRequest();
 			var folderName = "";
 			switch (type)
@@ -720,7 +710,10 @@ namespace LikeWater
 					break;
 			}
 			yield return request.SendWebRequest();
-
+			
+			#endregion
+			
+			#region WriteToPersistent
 			try
 			{
 				switch (type)
@@ -729,6 +722,7 @@ namespace LikeWater
 						var texture = ((DownloadHandlerTexture) request.downloadHandler).texture;
 						var sprite = Extensions.Texture2DToSprite(texture);
 						onComplete(new MediaResult(){Sprite = sprite});
+						if (isLocal) yield break;
 						break;
 					case MediaType.Audio:
 						var clip = ((DownloadHandlerAudioClip) request.downloadHandler).audioClip;
@@ -755,19 +749,129 @@ namespace LikeWater
 					
 					File.WriteAllBytes(Application.persistentDataPath + folderName + request.uri.LocalPath,
 						request.downloadHandler.data);
+					yield break;
 				}
 				catch (Exception e)
 				{
 					Debug.LogError(e);
 				}
-
 			}
 			catch (Exception e)
 			{
 				Debug.LogError("The url didn't download correctly " + url + " And the error was " + e);
 			}
+			#endregion
 
-			yield return null;
+			#region CheckStreaming
+			// I actually only want streaming assets as a LAST RESORT 
+
+			if (type == MediaType.Image){
+				// If file exists in streaming 
+				if (File.Exists(Application.streamingAssetsPath + "/Images" + UrlParser(url)))
+				{
+					Sprite sprite = LoadSprite(Application.streamingAssetsPath + "/Images" + UrlParser(url));
+					onComplete(new MediaResult() {Sprite = sprite});
+					yield break;
+				}
+#if UNITY_ANDROID
+				var localRequest =
+					UnityWebRequestTexture.GetTexture((_jarLocation + Application.dataPath + "!assets" + "/Images/" + url));
+				yield return localRequest.SendWebRequest();
+				if (string.IsNullOrEmpty(localRequest.error))
+				{
+					Debug.LogError("Download texture at jar");
+					var handler = (DownloadHandlerTexture) localRequest.downloadHandler;
+					if (handler.texture != null)
+					{
+						var sprite = Extensions.Texture2DToSprite(handler.texture);
+						onComplete(new MediaResult() {Sprite = sprite});
+						yield break;
+					}
+					
+				}
+				Debug.LogError("Failed texture so at streaming assets");
+
+				localRequest =
+					UnityWebRequestTexture.GetTexture(Application.streamingAssetsPath + "/Images/" + url);
+				yield return localRequest.SendWebRequest();
+				if (string.IsNullOrEmpty(localRequest.error))
+				{
+					var handler = (DownloadHandlerTexture) localRequest.downloadHandler;
+					if (handler.texture != null)
+					{
+						var sprite = Extensions.Texture2DToSprite(handler.texture);
+						onComplete(new MediaResult() {Sprite = sprite});
+						yield break;
+					}
+				}				
+#endif
+			}
+			
+			if (type == MediaType.Audio)
+			{
+				if (File.Exists(Application.streamingAssetsPath + "/Audio/" + url))
+				{
+					url = Application.streamingAssetsPath + "/Audio/" + url;
+				}
+#if UNITY_ANDROID
+				var localRequest =
+					UnityWebRequestMultimedia.GetAudioClip(_jarLocation + Application.dataPath + "!assets" + "/Audio/" + url, AudioType.WAV);
+				yield return localRequest.SendWebRequest();
+				if (string.IsNullOrEmpty(localRequest.error))
+				{
+					Debug.LogError("Download audio at jar");
+					var handler = (DownloadHandlerAudioClip) localRequest.downloadHandler;
+					if (handler.audioClip != null)
+					{
+						var clip = handler.audioClip;
+						onComplete(new MediaResult() {Clip = clip});
+						yield break;
+					}
+					
+				}
+
+				localRequest =
+					UnityWebRequestMultimedia.GetAudioClip(Application.streamingAssetsPath + "/Audio/" + url, AudioType.WAV);
+				yield return localRequest.SendWebRequest();
+				if (string.IsNullOrEmpty(localRequest.error))
+				{
+					Debug.LogError("streaming assets audio");
+					var handler = (DownloadHandlerAudioClip) localRequest.downloadHandler;
+					if (handler.audioClip != null)
+					{
+						var clip = handler.audioClip;
+						onComplete(new MediaResult() {Clip = clip});
+						yield break;
+					}
+				}				
+#endif
+				var streamingRequest = new UnityWebRequest();
+				switch (type)
+				{
+					case MediaType.Image:
+						request = UnityWebRequestTexture.GetTexture(url);
+						break;
+					case MediaType.Audio:
+						request = UnityWebRequestMultimedia.GetAudioClip(url, AudioType.WAV);
+						break;
+				}
+				yield return request.SendWebRequest();
+				
+				switch (type)
+				{
+					case MediaType.Image:
+						var texture = ((DownloadHandlerTexture) request.downloadHandler).texture;
+						var sprite = Extensions.Texture2DToSprite(texture);
+						onComplete(new MediaResult(){Sprite = sprite});
+						break;
+					case MediaType.Audio:
+						var clip = ((DownloadHandlerAudioClip) request.downloadHandler).audioClip;
+						onComplete(new MediaResult(){Clip = clip});
+						break;
+				}
+				
+			}
+			#endregion
 		}
 
 		// Literally only works right now to rid of the web url part of a link

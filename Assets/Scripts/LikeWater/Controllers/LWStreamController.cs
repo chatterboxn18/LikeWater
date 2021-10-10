@@ -26,7 +26,7 @@ public class LWStreamController : MonoBehaviour
         foreach (var video in streamItem.Videos)
         {
             var card = Instantiate(_videoPrefab, _videoContainer);
-            card.SetMediaCard(video);
+            StartCoroutine(card.SetMediaCard(video));
         }
     }
 }

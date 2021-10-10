@@ -28,6 +28,7 @@ namespace LikeWater
 		[SerializeField] private CanvasGroup _mainGroup;
 		[SerializeField] private SimpleButton _clipModeButton;
 		[SerializeField] private TextMeshProUGUI _clipName;
+		[SerializeField] private AudioSource _testAudioSource;
 		private bool _isClipEnabled;
 
 		[SerializeField] private Slider _volumeSlider;
@@ -104,8 +105,13 @@ namespace LikeWater
 				else
 				{
 					_notificationButton.SetActive(false);
-					_hasNotification = true;
+					_hasNotification = false;
 				}
+			}
+			else
+			{
+				_notificationButton.SetActive(false);
+				_hasNotification = false;
 			}
 
 			if (PlayerPrefs.HasKey(LWConfig.ClipIndex))
@@ -162,7 +168,10 @@ namespace LikeWater
 		public void UpdateTimer(string time, bool isDone = false)
 		{
 			if (isDone && !_isButtonPress)
+			{
 				_wendyBuzzer.Play();
+				Evt_FinishTimer();
+			}
 			_timerText.text = time;
 		}
 		
@@ -223,9 +232,12 @@ namespace LikeWater
 		{
 			//need better way to check if there should be audio on stop timer
 			_isButtonPress = true;
-			_timerText.text = PlayerPrefs.HasKey(LWConfig.Timer) ? PlayerPrefs.GetString(LWConfig.Timer) : "00:00:00";
+			Evt_FinishTimer();
 			_timeController.Evt_StopTimer();
-			
+		}
+
+		private void Evt_FinishTimer()
+		{			
 			//turn on clip mode
 			_clipModeButton.SetVisibility(true);
 			_editButton.SetVisibility(true);
@@ -255,7 +267,9 @@ namespace LikeWater
 		private void ButtonEvt_ToggleIndex(int index)
 		{
 			PlayerPrefs.SetInt(LWConfig.ClipIndex, index);
-			_timeController.ResetWithClip(LWResourceManager.AudioClips[index].Clip);
+			_testAudioSource.Stop();
+			_testAudioSource.clip =LWResourceManager.AudioClips[index].Clip;
+			_testAudioSource.Play();
 		}
 
 		public void ButtonEvt_ClipsClose()
