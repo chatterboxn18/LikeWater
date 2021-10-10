@@ -19,7 +19,8 @@
 			"likewater-flowers.png",
 			"likewater-news.json",
 			"likewater-stream-android.json",
-			"likewater-cards.json"
+			"likewater-cards.json",
+			"likewater-clips.json"
 		],
 		"streak-notes" : [
 			{"1":"Leggo, what matters the most is that you're drinking water!"},

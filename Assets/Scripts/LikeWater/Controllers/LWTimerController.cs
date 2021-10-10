@@ -13,12 +13,22 @@ namespace LikeWater
 		private bool _isRunning;
 		private float _time;
 		[SerializeField] private CanvasGroup _editGroup;
+		[SerializeField] private SimpleButton _editButton;
 		[SerializeField] private LWTimerManager _timeController;
 		private bool _hasAudio = true;
 		[SerializeField] private AudioSource _wendyBuzzer;
 
 		[SerializeField] private AdvanceButton _notificationButton; 
 		[SerializeField] private AdvanceButton _soundButton;
+
+		[Header("For Clip Management")]
+		[SerializeField] private AdvanceButton _clipToggleButton;
+		[SerializeField] private ToggleGroup _toggles;
+		[SerializeField] private CanvasGroup _clipsGroup;
+		[SerializeField] private CanvasGroup _mainGroup;
+		[SerializeField] private SimpleButton _clipModeButton;
+		[SerializeField] private TextMeshProUGUI _clipName;
+		private bool _isClipEnabled;
 
 		[SerializeField] private Slider _volumeSlider;
 		private float _volumeSetting = 1f;
@@ -29,6 +39,31 @@ namespace LikeWater
 		{
 			base.Start();
 			_timeController.Evt_UpdateTime += UpdateTimer;
+			var counter = 0;
+			foreach (var item in LWResourceManager.AudioClips)
+			{
+				var button = Instantiate(_clipToggleButton, _toggles.transform);
+				button.GetComponentInChildren<TextMeshProUGUI>().text = item.Name;
+				var index = counter;
+				button.Evt_BasicEvent_Up += () => ButtonEvt_ToggleIndex(index);
+				counter++;
+			}
+			_toggles.Setup();
+			if (PlayerPrefs.HasKey(LWConfig.ClipIndex))
+			{
+				var audio = LWResourceManager.AudioClips[PlayerPrefs.GetInt(LWConfig.ClipIndex)];
+				_clipName.text = audio.Name;
+				_timeController.SetClip(audio.Clip);
+				_toggles.Evt_Toggle(PlayerPrefs.GetInt(LWConfig.ClipIndex));
+			}
+			else
+			{
+				var audio = LWResourceManager.AudioClips[0];
+				PlayerPrefs.SetInt(LWConfig.ClipIndex, 0);
+				_clipName.text = audio.Name;
+				_timeController.SetClip(audio.Clip);
+				_toggles.Evt_Toggle(0);
+			}
 		}
 		
 		private void OnEnable()
@@ -72,6 +107,15 @@ namespace LikeWater
 					_hasNotification = true;
 				}
 			}
+
+			if (PlayerPrefs.HasKey(LWConfig.ClipIndex))
+			{
+				var audio = LWResourceManager.AudioClips[PlayerPrefs.GetInt(LWConfig.ClipIndex)];
+				_clipName.text = audio.Name;
+				_timeController.SetClip(audio.Clip);
+				_toggles.Evt_Toggle(PlayerPrefs.GetInt(LWConfig.ClipIndex));
+			}
+			
 			if (PlayerPrefs.HasKey(LWConfig.Timer))
 				_timerText.text = PlayerPrefs.GetString(LWConfig.Timer);
 		}
@@ -160,6 +204,8 @@ namespace LikeWater
 		{
 			if (_isEdit) ButtonEvt_Edit();
 			
+			//turn off clip mode
+			
 			_isButtonPress = false;
 			var time = GetMinutes();
 			if (time <= 0)
@@ -167,6 +213,9 @@ namespace LikeWater
 				LWTransitionController.PopupError(LWTransitionController.Toasts.TextMessage, "Edit a time first!");
 				return;
 			}
+			_clipModeButton.SetVisibility(false);
+			_editButton.SetVisibility(false);
+
 			_timeController.Evt_StartTimer(time, _hasNotification, _hasAudio);
 		}
 	
@@ -176,6 +225,10 @@ namespace LikeWater
 			_isButtonPress = true;
 			_timerText.text = PlayerPrefs.HasKey(LWConfig.Timer) ? PlayerPrefs.GetString(LWConfig.Timer) : "00:00:00";
 			_timeController.Evt_StopTimer();
+			
+			//turn on clip mode
+			_clipModeButton.SetVisibility(true);
+			_editButton.SetVisibility(true);
 		}
 
 		public void ButtonEvt_EnableNotification()
@@ -192,6 +245,59 @@ namespace LikeWater
 			_soundButton.SetActive(_hasAudio);
 			_timeController.SetMute(!_hasAudio);
 			PlayerPrefs.SetInt(LWConfig.HasSound, _hasAudio ? 1:0);
+		}
+
+		public void ButtonEvt_ClipMode()
+		{
+			EnableClips(_mainGroup.gameObject.activeSelf);
+		}
+
+		private void ButtonEvt_ToggleIndex(int index)
+		{
+			PlayerPrefs.SetInt(LWConfig.ClipIndex, index);
+			_timeController.ResetWithClip(LWResourceManager.AudioClips[index].Clip);
+		}
+
+		public void ButtonEvt_ClipsClose()
+		{
+			var audioClips = LWResourceManager.AudioClips;
+			if (PlayerPrefs.HasKey(LWConfig.ClipIndex))
+			{
+				var soundClip = audioClips[PlayerPrefs.GetInt(LWConfig.ClipIndex)];
+				_timeController.SetClip(soundClip.Clip);
+				_clipName.text = soundClip.Name;
+			}
+			else
+			{
+				var soundClip = audioClips[0];
+				_timeController.SetClip(soundClip.Clip);
+				_clipName.text = soundClip.Name;
+			}
+			EnableClips(false);
+		}
+
+		private void EnableClips(bool on)
+		{
+			if (on)
+			{
+				_clipsGroup.gameObject.SetActive(true);
+				_clipsGroup.alpha = 0;
+				_mainGroup.LeanAlpha(0, LWConfig.FadeTime).setOnComplete(() =>
+				{
+					_mainGroup.gameObject.SetActive(false);
+					_clipsGroup.LeanAlpha(1, LWConfig.FadeTime);
+				});
+			}
+			else
+			{
+				_mainGroup.gameObject.SetActive(true);
+				_mainGroup.alpha = 0;
+				_clipsGroup.LeanAlpha(0, LWConfig.FadeTime).setOnComplete(() =>
+				{
+					_clipsGroup.gameObject.SetActive(false);
+					_mainGroup.LeanAlpha(1, LWConfig.FadeTime);
+				});
+			}
 		}
 	}
 }

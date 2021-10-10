@@ -1,0 +1,28 @@
+{
+	"Clips": [
+		{
+			"Name":"Jungle Rain",
+			"Link": "jungle-rain.wav"
+		},
+		{
+			"Name":"Rain on Street",
+			"Link": "outside-with-rain.wav"
+		},
+		{
+			"Name":"Dripping Rooftop Rain",
+			"Link": "rain-dripping-rooftop.wav"
+		},
+		{
+			"Name":"Heavy Rain",
+			"Link": "rain-heavy.wav"
+		},
+		{
+			"Name":"Rain on Glass",
+			"Link": "rain-on-glass.wav"
+		},
+		{
+			"Name":"Medium Rain",
+			"Link": "rain-soft.wav"
+		}
+	]
+}

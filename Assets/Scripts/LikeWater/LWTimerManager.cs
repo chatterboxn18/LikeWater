@@ -73,12 +73,26 @@ namespace LikeWater
 				}
 			}
 		}
-
+		
 		public void SetVolume(float amount)
 		{
 			_audioController.Source.volume = amount;
 		}
 
+		public void SetClip(AudioClip clip)
+		{
+			if (_audioController.Source.isPlaying)
+				_audioController.Source.Stop();
+			_audioController.Source.clip = clip;
+		}
+
+		public void ResetWithClip(AudioClip clip)
+		{
+			_audioController.Source.Stop();
+			_audioController.Source.clip = clip;
+			_audioController.Source.Play();
+		}
+		
 		public void SetMute(bool on)
 		{
 			_audioController.Source.mute = on;
@@ -95,7 +109,7 @@ namespace LikeWater
 				CreateNotification(time);
 			_futureTime = DateTime.Now.AddMinutes(time);
 			_isRunning = true;
-			_audioController.FadeAudio(true, 0.2f);
+			_audioController.Source.Play();
 		}
 
 		public void Evt_StopTimer()
@@ -108,7 +122,7 @@ namespace LikeWater
 			_isRunning = false;
 			Evt_UpdateTime(PlayerPrefs.HasKey(LWConfig.Timer) ? PlayerPrefs.GetString(LWConfig.Timer) : "00:00:00", true);
 			if (_audioController.Source.isPlaying)
-				_audioController.FadeAudio(false, 0.2f);
+				_audioController.Source.Stop();
 		}
 
 		private void Update()
@@ -123,7 +137,7 @@ namespace LikeWater
 				_isRunning = false;
 				Evt_UpdateTime(PlayerPrefs.HasKey(LWConfig.Timer) ? PlayerPrefs.GetString(LWConfig.Timer) : "00:00:00", true);
 				if (_audioController.Source.isPlaying)
-					_audioController.FadeAudio(false, 0.2f);
+					_audioController.Source.Stop();
 				return;
 			}
 			Evt_UpdateTime($"{time.Hours:00}:{time.Minutes:00}:{time.Seconds:00}", false);

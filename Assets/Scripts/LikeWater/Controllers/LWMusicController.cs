@@ -27,6 +27,8 @@ namespace LikeWater
 		[SerializeField] private CanvasGroup _loaderGroup;
 		[SerializeField] private RectTransform _loaderfill;
 
+		private List<Coroutine> _jobQueue = new List<Coroutine>();
+
 		protected override void Start()
 		{
 			base.Start();
@@ -42,12 +44,13 @@ namespace LikeWater
 				PlayerPrefs.SetInt(LWConfig.PageIndexName, 0);
 			}
 
-			for (var i = 0; i < _musicList.Count; i++)
+			StartCoroutine(RetrievePage());
+			/*for (var i = 0; i < _musicList.Count; i++)
 			{
 				var page = Instantiate(_musicPagePrefab, _pagesContainer);
-				page.SetPage(i);
+				_jobQueue.Add(StartCoroutine(page.SetPage(i)));
 				_pages.Add(i, page.transform);
-			}
+			}*/
 			_currentIndex = PlayerPrefs.GetInt(LWConfig.PageIndexName);
 			_pagesContainer.GetChild(_currentIndex).SetParent(_currentPage);
 			_loaderGroup.LeanAlpha(0, LWConfig.FadeTime).setOnComplete(() =>
@@ -56,7 +59,16 @@ namespace LikeWater
 			});
 		}
 
-
+		private IEnumerator RetrievePage()
+		{
+			for (var i = 0; i < _musicList.Count; i++)
+			{
+				var page = Instantiate(_musicPagePrefab, _pagesContainer);
+				yield return page.SetPage(i);
+				_pages.Add(i, page.transform);
+			}
+		}
+		
 		public void ButtonEvt_Next()
 		{
 			if (_isTransitioning) return;

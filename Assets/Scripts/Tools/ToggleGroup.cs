@@ -8,6 +8,13 @@ public class ToggleGroup : MonoBehaviour
 	private int _activeIndex;
 	private void Start()
 	{
+		Setup();
+	}
+
+	// no default toggle, call it yourself
+	public void Setup()
+	{
+		ToggleButtons.Clear(); //reset every time
 		var counter = 0;
 		foreach (var item in transform.GetComponentsInChildren<AdvanceButton>())
 		{
@@ -15,11 +22,10 @@ public class ToggleGroup : MonoBehaviour
 			item.Evt_BasicEvent_Click += () => Evt_Toggle(index);
 			ToggleButtons.Add(item);
 			counter++;
-
 		}
 	}
 
-	private void Evt_Toggle(int index)
+	public void Evt_Toggle(int index)
 	{
 		_activeIndex = index;
 		for (var i = 0; i < ToggleButtons.Count; i++)

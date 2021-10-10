@@ -14,7 +14,7 @@ namespace LikeWater
 		[SerializeField] private LWMediaCard _musicPrefab;
 
 
-		public void SetPage(int index)
+		public IEnumerator SetPage(int index)
 		{
 			var videoList = LWResourceManager.MusicList[index].Videos;
 			var musicList = LWResourceManager.MusicList;
@@ -22,7 +22,7 @@ namespace LikeWater
 			foreach (var video in videoList)
 			{
 				var newVideo = Instantiate(_mediaPrefab, _mediaParent);
-				newVideo.SetMediaCard(video);
+				yield return newVideo.SetMediaCard(video);
 			}
 
 			foreach (var music in musicList[index].Links)

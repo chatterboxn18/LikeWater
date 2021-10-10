@@ -28,11 +28,9 @@ public class LWBaseController : MonoBehaviour
 			}
 			_overlay.alpha = 0;
 			_overlay.gameObject.SetActive(true);
-			Debug.Log("Transitioning");
 			_overlay.LeanAlpha(1 , LWConfig.FadeTime).setOnComplete(() =>
 			{
 				Transition(true);
-				Debug.Log("It's taking forever to get here");
 			});
 			return;
 		}
@@ -67,10 +65,8 @@ public class LWBaseController : MonoBehaviour
 	{
 		//transform.localScale = new Vector3(1, on? 0: 1,1); 
 		canvasGroup.alpha = on? 0:1;
-		Debug.Log("It's this, it's hinging here");
 		gameObject.SetActive(true);
 		var to = on ? 1 : 0;
-		Debug.Log("Instantiating is expensive");
 		canvasGroup.LeanAlpha(to, LWConfig.FadeTime).setOnComplete(() =>
 		{
 			onComplete?.Invoke();

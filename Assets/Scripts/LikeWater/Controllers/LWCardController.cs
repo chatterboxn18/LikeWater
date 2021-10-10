@@ -21,8 +21,6 @@ namespace LikeWater
 
 		private int _currentIndex = 0;
 
-		private bool _isTransitioning = false;
-
 		private bool _isFirstLaunch = true; //Need a way to avoid first time enabling, can't think of a better way to do it yet
 
 		protected override void Start()

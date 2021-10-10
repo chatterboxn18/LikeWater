@@ -24,14 +24,14 @@ namespace LikeWater
 			
 		}
 
-		public void SetMediaCard(LWResourceManager.VideoItem item)
+		public IEnumerator SetMediaCard(LWResourceManager.VideoItem item)
 		{
 
-			StartCoroutine(LoadImage(item.ImageUrl, (sprite) =>
+			yield return LoadImage(item.ImageUrl, (sprite) =>
 			{
 				_mediaImage.sprite = sprite;
 				LeanTween.alpha(_mediaImage.rectTransform, 1, LWConfig.FadeTime);
-			}));
+			});
 			_mediaTitle.text = item.Title;
 			_mediaDate.text = item.Date;
 			if (_button)

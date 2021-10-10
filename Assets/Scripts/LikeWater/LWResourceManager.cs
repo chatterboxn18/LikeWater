@@ -10,6 +10,12 @@ namespace LikeWater
 {
 	public class LWResourceManager : MonoBehaviour
 	{
+		public enum MediaType
+		{
+			Image, 
+			Audio
+		}
+		
 		public static List<Music> MusicList => _musicList;
 
 		private static List<VideoItem> _videoList = new List<VideoItem>();
@@ -99,6 +105,9 @@ namespace LikeWater
 		private static List<Info> _infoList = new List<Info>();
 		public static List<Info> InfoList => _infoList;
 		
+		//bool for updating files
+		private bool _isUpdating;
+		
 		private IEnumerator Start()
 		{
 
@@ -110,11 +119,12 @@ namespace LikeWater
 			yield return DownloadFiles();
 			yield return GetVideos();
 			yield return GetFlowers();
-			yield return GetSprites();
+			yield return GetFlowerSprites();
 			yield return GetDrinkIcons();
 			yield return GetInstructions();
 			yield return GetNews();
 			yield return GetStreams();
+			yield return GetAudioClips();
 			_isLoaded = true;
 		}
 
@@ -249,6 +259,9 @@ namespace LikeWater
 				}
 			}
 
+			// Yield break above if the config isn't new, otherwise bool is true for updating certain media files
+			_isUpdating = true;
+			
 			yield return GetPopupInfo(config["promo-messages"].AsArray);
 
 			var configFiles = config["files"].AsArray;
@@ -405,7 +418,7 @@ namespace LikeWater
 					var linkValue = linkItem.Value;
 					var item = new LinkItem();
 					item.Link = linkValue["link"];
-					yield return GetImage(LWConfig.ServerPath + linkValue["icon"], (sprite) => { item.Icon = sprite; });
+					yield return GetMedia(LWConfig.ServerPath + linkValue["icon"], (result) => { item.Icon = result.Sprite; });
 					music.Links.Add(item);
 
 				}
@@ -530,6 +543,44 @@ namespace LikeWater
 			_drinkIcons = spriteList;
 		}
 
+#region Clips
+
+		private static List<SoundClip> _audioClips = new List<SoundClip>();
+		public static List<SoundClip> AudioClips =>_audioClips;
+		
+		public class SoundClip
+		{
+			public string Name;
+			public AudioClip Clip;
+		}
+		
+		private IEnumerator GetAudioClips()
+		{
+			var succeed = false;
+			DownloadHandler dHandler = null;
+			yield return GetFile("likewater-clips.json", (success, handler) =>
+			{
+				succeed = success;
+				dHandler = handler;
+			});
+			if (!succeed)
+			{
+				Debug.LogError("likewater-clips.json failed to download");
+				yield break;
+			}
+			var data = dHandler.text;
+			var audioItems = JSON.Parse(data);
+			foreach (var audio in audioItems["Clips"].AsArray)
+			{
+				var value = audio.Value;
+				var clip = new SoundClip {Name = value["Name"]};
+				yield return GetMedia(value["Link"], result => { clip.Clip = result.Clip;}, MediaType.Audio, _isUpdating);
+				_audioClips.Add(clip);
+			}
+		}
+
+#endregion
+		
 #region Instructions
 		
 		private static List<Sprite> _instructionsScreens;
@@ -570,9 +621,9 @@ namespace LikeWater
 		}
 
 #endregion
-		
-		
-		private IEnumerator GetSprites()
+
+
+		private IEnumerator GetFlowerSprites()
 		{
 			DownloadHandler request = null;
 			var succeed = false;
@@ -610,36 +661,99 @@ namespace LikeWater
 				return Application.persistentDataPath + "/Images" + UrlParser(url);
 			return url;
 		}
-		
-		private IEnumerator GetImage(string url, Action<Sprite> onComplete)
+
+		private struct MediaResult
 		{
-			if (File.Exists(Application.persistentDataPath +"/Images" +  UrlParser(url)))
+			public AudioClip Clip;
+			public Sprite Sprite;
+		}
+
+		private IEnumerator GetMedia(string url, Action<MediaResult> onComplete, MediaType type = MediaType.Image, bool overwrite = false)
+		{
+			if (type == MediaType.Image)
 			{
-				var sprite = LoadSprite(Application.persistentDataPath + "/Images" + UrlParser(url));
-				onComplete(sprite);
-				yield break;
+				// If File Exists in persistent 
+				if (File.Exists(Application.persistentDataPath + "/Images" + UrlParser(url)))
+				{
+					Sprite sprite = LoadSprite(Application.persistentDataPath + "/Images" + UrlParser(url));
+					onComplete(new MediaResult() {Sprite = sprite});
+					yield break;
+				}
+
+
+				// If file exists in streaming 
+				if (File.Exists(Application.streamingAssetsPath + "/Images" + UrlParser(url)))
+				{
+					Sprite sprite = LoadSprite(Application.streamingAssetsPath + "/Images" + UrlParser(url));
+					onComplete(new MediaResult() {Sprite = sprite});
+					yield break;
+				}
 			}
 
-			var request = UnityWebRequestTexture.GetTexture(url);
+
+			var isLocal = false;
+			if (type == MediaType.Audio)
+			{
+				if (File.Exists(Application.persistentDataPath + "/Audio/" + url) && !overwrite)
+				{
+					url = Application.persistentDataPath + "/Audio/" + url;
+					isLocal = true;
+				}
+				else if (File.Exists(Application.streamingAssetsPath + "/Audio/" + url))
+				{
+					url = Application.streamingAssetsPath + "/Audio/" + url;
+					isLocal = true;
+				}
+			}
+
+			var request = new UnityWebRequest();
+			var folderName = "";
+			switch (type)
+			{
+				case MediaType.Image:
+					request = UnityWebRequestTexture.GetTexture(url);
+					folderName = "/Images/";
+					break;
+				case MediaType.Audio:
+					request = UnityWebRequestMultimedia.GetAudioClip(url, AudioType.WAV);
+					folderName = "/Audio/";
+					break;
+			}
 			yield return request.SendWebRequest();
 
 			try
 			{
-				var texture = ((DownloadHandlerTexture) request.downloadHandler).texture;
-				var sprite = Extensions.Texture2DToSprite(texture);
-				onComplete(sprite);
+				switch (type)
+				{
+					case MediaType.Image:
+						var texture = ((DownloadHandlerTexture) request.downloadHandler).texture;
+						var sprite = Extensions.Texture2DToSprite(texture);
+						onComplete(new MediaResult(){Sprite = sprite});
+						break;
+					case MediaType.Audio:
+						var clip = ((DownloadHandlerAudioClip) request.downloadHandler).audioClip;
+						onComplete(new MediaResult(){Clip = clip});
+						if(isLocal) yield break;
+						break;
+				}
 
 				try
 				{
 					var fileName = Path.GetFileName(request.uri.LocalPath);
-					if (!Directory.Exists(Application.persistentDataPath + "/Images/" +
+					if (!Directory.Exists(Application.persistentDataPath + folderName +
 					                      request.uri.LocalPath.Replace(fileName, string.Empty)))
 					{
-						Directory.CreateDirectory(Application.persistentDataPath + "/Images/" +
+						Directory.CreateDirectory(Application.persistentDataPath + folderName +
 						                          request.uri.LocalPath.Replace(fileName, string.Empty));
 					}
 
-					File.WriteAllBytes(Application.persistentDataPath + "/Images/" + request.uri.LocalPath,
+					if (overwrite)
+					{
+						if (File.Exists(Application.persistentDataPath + folderName + request.uri.LocalPath))
+							File.Delete(Application.persistentDataPath + folderName + request.uri.LocalPath);
+					}
+					
+					File.WriteAllBytes(Application.persistentDataPath + folderName + request.uri.LocalPath,
 						request.downloadHandler.data);
 				}
 				catch (Exception e)
@@ -656,6 +770,7 @@ namespace LikeWater
 			yield return null;
 		}
 
+		// Literally only works right now to rid of the web url part of a link
 		private string UrlParser(string path)
 		{
 			var newString = "";

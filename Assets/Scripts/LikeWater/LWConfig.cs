@@ -9,6 +9,7 @@ public static class LWConfig
 	public const string HasNotification = "Timer_HasNotification";
 	public const string HasSound = "Timer_HasSound";
 	public const string VolumeSetting = "Timer_Volume";
+	public const string ClipIndex = "Timer_Clip";
 	public const string StreakCounter = "Streak_Counter";
 	public const string StreakDay = "Streak_Date";
 	public const string FirstInstructions = "First_Instructions";
