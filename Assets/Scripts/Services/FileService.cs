@@ -10,7 +10,7 @@ public class FileService : Service
 	public IEnumerator DownloadFile(string fileName, Action<bool, string> onComplete)
 	{
 			
-		var request = UnityWebRequest.Get(LWConfig.ServerPath+ fileName);
+		var request = UnityWebRequest.Get(LikeWater.LWResourceManager.ServerPath+ fileName);
 		request.useHttpContinue = false;
 		yield return request.SendWebRequest();
 		if (!string.IsNullOrEmpty(request.error))

@@ -28,7 +28,6 @@ namespace LikeWater
 		[SerializeField] private CanvasGroup _mainGroup;
 		[SerializeField] private SimpleButton _clipModeButton;
 		[SerializeField] private TextMeshProUGUI _clipName;
-		[SerializeField] private AudioSource _testAudioSource;
 		private bool _isClipEnabled;
 
 		[SerializeField] private Slider _volumeSlider;
@@ -267,9 +266,7 @@ namespace LikeWater
 		private void ButtonEvt_ToggleIndex(int index)
 		{
 			PlayerPrefs.SetInt(LWConfig.ClipIndex, index);
-			_testAudioSource.Stop();
-			_testAudioSource.clip =LWResourceManager.AudioClips[index].Clip;
-			_testAudioSource.Play();
+			_timeController.ResetWithClip(LWResourceManager.AudioClips[index].Clip);
 		}
 
 		public void ButtonEvt_ClipsClose()
@@ -287,6 +284,7 @@ namespace LikeWater
 				_timeController.SetClip(soundClip.Clip);
 				_clipName.text = soundClip.Name;
 			}
+			_timeController.StopClip();
 			EnableClips(false);
 		}
 

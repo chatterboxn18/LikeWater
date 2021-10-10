@@ -21,7 +21,13 @@ public static class LWConfig
 	public const string WaterNotificationDescription = "Time to quench your thrist. Let's drink some water <3";
 	public const string StreamNotificationDescription = "Let's make it like a river and stream Like Water.";
 	public const string NotificationChannel = "like_water";
-	public const string ServerPath = "https://revelupgames.s3-us-west-1.amazonaws.com/LikeWaterDev/LikeWater/";
+	public const string ServerKey = "Server_Key";
+	public const string ServerPath = "https://BUCKET.amazonaws.com/LikeWater/";
+	public const string USServer = "revelupgames.s3.us-west-1";
+	public const string EUServer = "revelupgames-eu.s3.eu-west-2";
+	public const string KRServer = "revelupgames-kr.s3.ap-northeast-2";
+	public const string SEServer = "revelupgames-se.s3.ap-southeast-1";
+	
 	public const string ConfigFile = "likewater-config.json";
 	public const string LastModifiedKey = "last-modified";
 	public const float FadeTime = 0.2f;

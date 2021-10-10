@@ -11,7 +11,22 @@ namespace LikeWater
 	public class LWResourceManager : MonoBehaviour
 	{
 		private const string _jarLocation = "jar:file://";
-		
+
+		private static string _serverPath = LWConfig.ServerPath;
+		private string _key = "";
+		[SerializeField] private GameObject _serverGroup;
+		public static string ServerPath
+		{
+			get
+			{
+				if (PlayerPrefs.HasKey(LWConfig.ServerKey))
+				{
+					return _serverPath.Replace("BUCKET", PlayerPrefs.GetString(LWConfig.ServerKey));
+				}
+				return _serverPath.Replace("BUCKET", LWConfig.KRServer);
+			}
+		}
+
 		public enum MediaType
 		{
 			Image, 
@@ -109,10 +124,45 @@ namespace LikeWater
 		
 		//bool for updating files
 		private bool _isUpdating;
+
+		public enum Servers
+		{
+			Korea = 0, 
+			Singapore = 1, 
+			California = 2, 
+			London = 3
+		}
+		public void ButtonEvt_SetServer(int index)
+		{
+			switch ((Servers)index)
+			{
+				case Servers.Korea:
+					_key = LWConfig.KRServer;
+					break;
+				case Servers.Singapore:
+					_key = LWConfig.SEServer;
+					break;
+				case Servers.California:
+					_key = LWConfig.USServer;
+					break;
+				case Servers.London:
+					_key = LWConfig.EUServer;
+					break;
+			}
+			PlayerPrefs.SetString(LWConfig.ServerKey, _key);
+			_serverGroup.SetActive(false);
+		}
 		
 		private IEnumerator Start()
 		{
-
+			if (!PlayerPrefs.HasKey(LWConfig.ServerKey))
+			{
+				_serverGroup.SetActive(true);
+				while (string.IsNullOrEmpty(_key))
+				{
+					yield return null;
+				}
+			}
 			LWData.current.Setup(
 				(LWData) SerializationManager.Load(Application.persistentDataPath + "/saves/likewater.rv"));
 			LWCardData.current.Setup(
@@ -171,7 +221,7 @@ namespace LikeWater
 
 		private IEnumerator StreamImage(string localPath, Action<bool,Sprite> onComplete)
 		{
-			var url = LWConfig.ServerPath + localPath;
+			var url = ServerPath + localPath;
 			var request = UnityWebRequestTexture.GetTexture(url);
 			yield return request.SendWebRequest();
 			while (!request.isDone)
@@ -293,7 +343,7 @@ namespace LikeWater
 		private IEnumerator DownloadFile(string fileName, Action<bool, string> onComplete)
 		{
 			
-			var request = UnityWebRequest.Get(LWConfig.ServerPath+ fileName);
+			var request = UnityWebRequest.Get(ServerPath+ fileName);
 			request.useHttpContinue = false;
 			yield return request.SendWebRequest();
 			if (!string.IsNullOrEmpty(request.error))
@@ -346,7 +396,7 @@ namespace LikeWater
 				
 			var uriBuilder = new UriBuilder(Path.Combine(Application.persistentDataPath,path));
 			if (!downloaded)
-				uriBuilder = new UriBuilder(Path.Combine(LWConfig.ServerPath, path));
+				uriBuilder = new UriBuilder(Path.Combine(ServerPath, path));
 			var uri = uriBuilder.Uri;
 			var request = UnityWebRequestTexture.GetTexture(uri);
 			yield return request.SendWebRequest();
@@ -420,7 +470,7 @@ namespace LikeWater
 					var linkValue = linkItem.Value;
 					var item = new LinkItem();
 					item.Link = linkValue["link"];
-					yield return GetMedia(LWConfig.ServerPath + linkValue["icon"], (result) => { item.Icon = result.Sprite; });
+					yield return GetMedia(linkValue["icon"], (result) => { item.Icon = result.Sprite; });
 					music.Links.Add(item);
 
 				}
@@ -676,9 +726,9 @@ namespace LikeWater
 			var isLocal = false;
 			if (type == MediaType.Image)
 			{
-				if (File.Exists(Application.persistentDataPath + "/Images" + UrlParser(url)))
+				if (File.Exists(Application.persistentDataPath + "/Images/" + url))
 				{
-					Sprite sprite = LoadSprite(Application.persistentDataPath + "/Images" + UrlParser(url));
+					Sprite sprite = LoadSprite(Application.persistentDataPath + "/Images/" + url);
 					onComplete(new MediaResult() {Sprite = sprite});
 					yield break;
 				}
@@ -701,12 +751,14 @@ namespace LikeWater
 			switch (type)
 			{
 				case MediaType.Image:
-					request = UnityWebRequestTexture.GetTexture(url);
-					folderName = "/Images/";
+					folderName = "/Image/";
+					request = UnityWebRequestTexture.GetTexture(ServerPath+ url); // If it was persistent it would have been loaded already so i don't bother
 					break;
 				case MediaType.Audio:
-					request = UnityWebRequestMultimedia.GetAudioClip(url, AudioType.WAV);
 					folderName = "/Audio/";
+					if (!isLocal || overwrite) url = ServerPath + "Audio/" + url;
+					var uri = new UriBuilder(url);
+					request = UnityWebRequestMultimedia.GetAudioClip(uri.Uri, AudioType.WAV);
 					break;
 			}
 			yield return request.SendWebRequest();
@@ -734,21 +786,19 @@ namespace LikeWater
 				try
 				{
 					var fileName = Path.GetFileName(request.uri.LocalPath);
-					if (!Directory.Exists(Application.persistentDataPath + folderName +
-					                      request.uri.LocalPath.Replace(fileName, string.Empty)))
+					if (!Directory.Exists(Application.persistentDataPath + folderName))
 					{
-						Directory.CreateDirectory(Application.persistentDataPath + folderName +
-						                          request.uri.LocalPath.Replace(fileName, string.Empty));
+						Directory.CreateDirectory(Application.persistentDataPath + folderName);
 					}
-
 					if (overwrite)
-					{
-						if (File.Exists(Application.persistentDataPath + folderName + request.uri.LocalPath))
-							File.Delete(Application.persistentDataPath + folderName + request.uri.LocalPath);
-					}
+    				{
+    					if (File.Exists(Application.persistentDataPath + folderName + fileName))
+    						File.Delete(Application.persistentDataPath + folderName + fileName);
+    				}
 					
-					File.WriteAllBytes(Application.persistentDataPath + folderName + request.uri.LocalPath,
+					File.WriteAllBytes(Application.persistentDataPath + folderName + fileName,
 						request.downloadHandler.data);
+
 					yield break;
 				}
 				catch (Exception e)
@@ -775,11 +825,10 @@ namespace LikeWater
 				}
 #if UNITY_ANDROID
 				var localRequest =
-					UnityWebRequestTexture.GetTexture((_jarLocation + Application.dataPath + "!assets" + "/Images/" + url));
+					UnityWebRequestTexture.GetTexture(new UriBuilder(_jarLocation + Application.dataPath + "!assets" + "/Images/" + url).Uri);
 				yield return localRequest.SendWebRequest();
 				if (string.IsNullOrEmpty(localRequest.error))
 				{
-					Debug.LogError("Download texture at jar");
 					var handler = (DownloadHandlerTexture) localRequest.downloadHandler;
 					if (handler.texture != null)
 					{
@@ -789,10 +838,9 @@ namespace LikeWater
 					}
 					
 				}
-				Debug.LogError("Failed texture so at streaming assets");
 
 				localRequest =
-					UnityWebRequestTexture.GetTexture(Application.streamingAssetsPath + "/Images/" + url);
+					UnityWebRequestTexture.GetTexture(new UriBuilder(Application.streamingAssetsPath + "/Images/" + url).Uri);
 				yield return localRequest.SendWebRequest();
 				if (string.IsNullOrEmpty(localRequest.error))
 				{
@@ -815,11 +863,10 @@ namespace LikeWater
 				}
 #if UNITY_ANDROID
 				var localRequest =
-					UnityWebRequestMultimedia.GetAudioClip(_jarLocation + Application.dataPath + "!assets" + "/Audio/" + url, AudioType.WAV);
+					UnityWebRequestMultimedia.GetAudioClip(new UriBuilder(_jarLocation + Application.dataPath + "!assets" + "/Audio/" + url).Uri, AudioType.WAV);
 				yield return localRequest.SendWebRequest();
 				if (string.IsNullOrEmpty(localRequest.error))
 				{
-					Debug.LogError("Download audio at jar");
 					var handler = (DownloadHandlerAudioClip) localRequest.downloadHandler;
 					if (handler.audioClip != null)
 					{
@@ -831,11 +878,10 @@ namespace LikeWater
 				}
 
 				localRequest =
-					UnityWebRequestMultimedia.GetAudioClip(Application.streamingAssetsPath + "/Audio/" + url, AudioType.WAV);
+					UnityWebRequestMultimedia.GetAudioClip(new UriBuilder(Application.streamingAssetsPath + "/Audio/" + url).Uri, AudioType.WAV);
 				yield return localRequest.SendWebRequest();
 				if (string.IsNullOrEmpty(localRequest.error))
 				{
-					Debug.LogError("streaming assets audio");
 					var handler = (DownloadHandlerAudioClip) localRequest.downloadHandler;
 					if (handler.audioClip != null)
 					{
@@ -849,23 +895,23 @@ namespace LikeWater
 				switch (type)
 				{
 					case MediaType.Image:
-						request = UnityWebRequestTexture.GetTexture(url);
+						streamingRequest = UnityWebRequestTexture.GetTexture(new UriBuilder(url).Uri);
 						break;
 					case MediaType.Audio:
-						request = UnityWebRequestMultimedia.GetAudioClip(url, AudioType.WAV);
+						streamingRequest = UnityWebRequestMultimedia.GetAudioClip(new UriBuilder(url).Uri, AudioType.WAV);
 						break;
 				}
-				yield return request.SendWebRequest();
+				yield return streamingRequest.SendWebRequest();
 				
 				switch (type)
 				{
 					case MediaType.Image:
-						var texture = ((DownloadHandlerTexture) request.downloadHandler).texture;
+						var texture = ((DownloadHandlerTexture) streamingRequest.downloadHandler).texture;
 						var sprite = Extensions.Texture2DToSprite(texture);
 						onComplete(new MediaResult(){Sprite = sprite});
 						break;
 					case MediaType.Audio:
-						var clip = ((DownloadHandlerAudioClip) request.downloadHandler).audioClip;
+						var clip = ((DownloadHandlerAudioClip) streamingRequest.downloadHandler).audioClip;
 						onComplete(new MediaResult(){Clip = clip});
 						break;
 				}
@@ -912,6 +958,8 @@ namespace LikeWater
 			return sprite;
 
 		}
+		
+		
 	}
 
 }

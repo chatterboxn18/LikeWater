@@ -86,6 +86,11 @@ namespace LikeWater
 			_audioController.Source.clip = clip;
 		}
 
+		public void StopClip()
+		{
+			_audioController.Source.Stop();
+		}
+		
 		public void ResetWithClip(AudioClip clip)
 		{
 			_audioController.Source.Stop();
