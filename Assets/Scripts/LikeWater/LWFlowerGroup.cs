@@ -58,6 +58,12 @@ namespace LikeWater
 				LWTransitionController.PopupError(LWTransitionController.Toasts.TextMessage, "Future Date");
 				return;
 			}
+
+			if (date < DateTime.Today.AddDays(-1))
+			{
+				LWTransitionController.PopupError(LWTransitionController.Toasts.TextMessage, "Past Date");
+				return;
+			}
 			var dict = LWData.current.FlowerDictionary;
 			if (dict[date.Month + "/" + date.Year][date.Day - 1].PlantIndex != -1)
 			{

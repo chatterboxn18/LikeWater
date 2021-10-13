@@ -15,7 +15,7 @@ namespace LikeWater
 
 		private string _imageUrl = "";
 
-		private IEnumerator Start()
+		protected override IEnumerator Start()
 		{
 			while (string.IsNullOrEmpty(_imageUrl))
 			{

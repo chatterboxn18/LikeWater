@@ -11,8 +11,8 @@
 			"Name":"",
 			"Type": "Common",
 			"Index": "1",
-			"Cost": "0",
-			"Earns": "20"
+			"Cost": "20",
+			"Earns": "40"
 		},
 		{
 			"Name":"",
@@ -25,29 +25,29 @@
 			"Name":"",
 			"Type": "Common",
 			"Index": "3",
-			"Cost": "0",
-			"Earns": "20"
+			"Cost": "20",
+			"Earns": "40"
 		},
 		{
 			"Name":"",
 			"Type": "Common",
 			"Index": "4",
-			"Cost": "0",
-			"Earns": "20"
+			"Cost": "20",
+			"Earns": "40"
 		},
 		{
 			"Name":"",
 			"Type": "Common",
 			"Index": "5",
-			"Cost": "0",
-			"Earns": "20"
+			"Cost": "20",
+			"Earns": "40"
 		},
 		{
 			"Name":"",
 			"Type": "Common",
 			"Index": "6",
-			"Cost": "0",
-			"Earns": "20"
+			"Cost": "20",
+			"Earns": "40"
 		}
 	]
 }

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Net.Mime;
 using SimpleJSON;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -15,6 +16,7 @@ namespace LikeWater
 		private static string _serverPath = LWConfig.ServerPath;
 		private string _key = "";
 		[SerializeField] private GameObject _serverGroup;
+		[SerializeField] private CanvasGroup _updateGroup;
 		public static string ServerPath
 		{
 			get
@@ -124,6 +126,8 @@ namespace LikeWater
 		
 		//bool for updating files
 		private bool _isUpdating;
+		private bool _denyUpdate;
+		private bool _isCheckUpdate;
 
 		public enum Servers
 		{
@@ -151,6 +155,16 @@ namespace LikeWater
 			}
 			PlayerPrefs.SetString(LWConfig.ServerKey, _key);
 			_serverGroup.SetActive(false);
+		}
+
+		public void ButtonEvt_CheckUpdate(bool no)
+		{
+			_denyUpdate = !no;
+			_isCheckUpdate = true;
+			_updateGroup.LeanAlpha(0, LWConfig.FadeTime).setOnComplete(() =>
+			{
+				_updateGroup.gameObject.SetActive(false);
+			});
 		}
 		
 		private IEnumerator Start()
@@ -310,7 +324,16 @@ namespace LikeWater
 					yield break;
 				}
 			}
-
+			_updateGroup.gameObject.SetActive(true);
+			_updateGroup.LeanAlpha(1, LWConfig.FadeTime);
+			while (!_isCheckUpdate)
+			{
+				yield return null;
+			}
+			
+			if (_denyUpdate)
+				yield break;
+			
 			// Yield break above if the config isn't new, otherwise bool is true for updating certain media files
 			_isUpdating = true;
 			
@@ -603,6 +626,7 @@ namespace LikeWater
 		public class SoundClip
 		{
 			public string Name;
+			public string ClipLink;
 			public AudioClip Clip;
 		}
 		
@@ -622,11 +646,22 @@ namespace LikeWater
 			}
 			var data = dHandler.text;
 			var audioItems = JSON.Parse(data);
+			var index = 0;
+			if (PlayerPrefs.HasKey(LWConfig.ClipIndex))
+			{
+				index = PlayerPrefs.GetInt(LWConfig.ClipIndex);
+			}
 			foreach (var audio in audioItems["Clips"].AsArray)
 			{
+				var count = _audioClips.Count;
 				var value = audio.Value;
-				var clip = new SoundClip {Name = value["Name"]};
-				yield return GetMedia(value["Link"], result => { clip.Clip = result.Clip;}, MediaType.Audio, _isUpdating);
+				var clip = new SoundClip
+				{
+					Name = value["Name"],
+					ClipLink = value["Link"]
+				};
+				if (count == index)
+					yield return GetMedia(value["Link"], result => { clip.Clip = result.Clip;}, MediaType.Audio, _isUpdating);
 				_audioClips.Add(clip);
 			}
 		}
@@ -712,7 +747,7 @@ namespace LikeWater
 			return url;
 		}
 
-		private struct MediaResult
+		public struct MediaResult
 		{
 			public AudioClip Clip;
 			public Sprite Sprite;

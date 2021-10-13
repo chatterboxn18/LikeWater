@@ -7,15 +7,35 @@ using UnityEngine.Networking;
 
 public class UILoader : MonoBehaviour
 {
-	[SerializeField] private CanvasGroup _loaderGroup;
+	[SerializeField] protected CanvasGroup _loaderGroup;
 	private RectTransform _loaderRect;
-
+	
 	protected virtual void Awake()
 	{
 		_loaderRect = _loaderGroup.GetComponent<RectTransform>();
 	}
 
-	protected IEnumerator LoadImage(string path, Action<Sprite> OnComplete)
+	protected virtual IEnumerator Start()
+	{
+		yield return null;
+	}
+	
+	protected IEnumerator LoadAudio(string path, Action<AudioClip> onComplete)
+	{
+		var fileService = (FileService) ServiceManager.ServiceCollection[ServiceManager.Services.FileService];
+		LeanTween.rotate(_loaderRect, -360, 1).setLoopClamp();
+		yield return fileService.GetMedia(path, result =>
+		{
+			if (result.Clip != null)
+				onComplete(result.Clip);
+			LeanTween.alphaCanvas(_loaderGroup, 0, LWConfig.FadeTime).setOnComplete(() =>
+			{
+				_loaderGroup.gameObject.SetActive(false);
+			});
+		}, FileService.MediaType.Audio);
+	}
+
+	protected IEnumerator LoadImage(string path, Action<Sprite> onComplete)
 	{
 		LeanTween.rotate(_loaderRect, -360, 1).setLoopClamp();
 		if (File.Exists(path))
@@ -25,7 +45,7 @@ public class UILoader : MonoBehaviour
 			{
 				_loaderGroup.gameObject.SetActive(false);
 			});
-			OnComplete(sprite);
+			onComplete(sprite);
 			yield break;
 		}
     			
@@ -34,7 +54,7 @@ public class UILoader : MonoBehaviour
 
 		while (!request.isDone)
 		{
-			
+			yield return null;
 		}
 		try
 		{
@@ -44,7 +64,7 @@ public class UILoader : MonoBehaviour
 			{
 				_loaderGroup.gameObject.SetActive(false);
 			});
-			OnComplete(sprite);
+			onComplete(sprite);
     
 			try
 			{
@@ -68,10 +88,7 @@ public class UILoader : MonoBehaviour
 		catch (Exception e)
 		{
 			Debug.LogError("The url didn't download correctly " + path + e);
-		}
-    
-    			
-    			
+		}	
 	}
 
 }

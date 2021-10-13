@@ -22,7 +22,7 @@ namespace LikeWater
 		[SerializeField] private AdvanceButton _soundButton;
 
 		[Header("For Clip Management")]
-		[SerializeField] private AdvanceButton _clipToggleButton;
+		[SerializeField] private LWAudioItem _clipToggleButton;
 		[SerializeField] private ToggleGroup _toggles;
 		[SerializeField] private CanvasGroup _clipsGroup;
 		[SerializeField] private CanvasGroup _mainGroup;
@@ -39,16 +39,6 @@ namespace LikeWater
 		{
 			base.Start();
 			_timeController.Evt_UpdateTime += UpdateTimer;
-			var counter = 0;
-			foreach (var item in LWResourceManager.AudioClips)
-			{
-				var button = Instantiate(_clipToggleButton, _toggles.transform);
-				button.GetComponentInChildren<TextMeshProUGUI>().text = item.Name;
-				var index = counter;
-				button.Evt_BasicEvent_Up += () => ButtonEvt_ToggleIndex(index);
-				counter++;
-			}
-			_toggles.Setup();
 			if (PlayerPrefs.HasKey(LWConfig.ClipIndex))
 			{
 				var audio = LWResourceManager.AudioClips[PlayerPrefs.GetInt(LWConfig.ClipIndex)];
@@ -65,9 +55,31 @@ namespace LikeWater
 				_toggles.Evt_Toggle(0);
 			}
 		}
+
+		private void LoadClips()
+		{
+			var counter = 0;
+			foreach (var item in LWResourceManager.AudioClips)
+			{
+				var button = Instantiate(_clipToggleButton, _toggles.transform);
+				var index = counter;
+				button.SetItem(index);
+				button.Button.Evt_BasicEvent_Click += () =>
+				{
+					if (button.IsLoaded)
+						ButtonEvt_ToggleIndex(index);
+				};
+				counter++;
+			}
+			_toggles.Setup();
+			_isClipEnabled = true;
+		}
 		
 		private void OnEnable()
 		{
+			//for unity mobile devices
+			Screen.sleepTimeout = SleepTimeout.NeverSleep;
+			
 			_timeController.DisplayTimer(false);
 			
 			if (PlayerPrefs.HasKey(LWConfig.VolumeSetting))
@@ -112,19 +124,11 @@ namespace LikeWater
 				_notificationButton.SetActive(false);
 				_hasNotification = false;
 			}
-
-			if (PlayerPrefs.HasKey(LWConfig.ClipIndex))
-			{
-				var audio = LWResourceManager.AudioClips[PlayerPrefs.GetInt(LWConfig.ClipIndex)];
-				_clipName.text = audio.Name;
-				_timeController.SetClip(audio.Clip);
-				_toggles.Evt_Toggle(PlayerPrefs.GetInt(LWConfig.ClipIndex));
-			}
 			
 			if (PlayerPrefs.HasKey(LWConfig.Timer))
 				_timerText.text = PlayerPrefs.GetString(LWConfig.Timer);
 		}
-	
+			
 		private void CleanUp()
 		{
 			//should there ever be a clean up
@@ -187,6 +191,8 @@ namespace LikeWater
 	
 		public void OnDisable()
 		{
+			// so when the timer is on the screen stay but when it leaves then eh 
+			Screen.sleepTimeout = SleepTimeout.SystemSetting;
 			_timeController.DisplayTimer(true);
 		}
 
@@ -293,6 +299,15 @@ namespace LikeWater
 			if (on)
 			{
 				_clipsGroup.gameObject.SetActive(true);
+				if (!_isClipEnabled)
+					LoadClips();
+				if (PlayerPrefs.HasKey(LWConfig.ClipIndex))
+				{
+					var audio = LWResourceManager.AudioClips[PlayerPrefs.GetInt(LWConfig.ClipIndex)];
+					_clipName.text = audio.Name;
+					_timeController.SetClip(audio.Clip);
+					_toggles.Evt_Toggle(PlayerPrefs.GetInt(LWConfig.ClipIndex));
+				}
 				_clipsGroup.alpha = 0;
 				_mainGroup.LeanAlpha(0, LWConfig.FadeTime).setOnComplete(() =>
 				{
