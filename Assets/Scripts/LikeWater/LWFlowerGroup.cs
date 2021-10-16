@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -52,18 +53,14 @@ namespace LikeWater
 
 		private void Evt_OpenPopup(string day)
 		{
-			var date = DateTime.Parse(day);
+			
+			var date = DateTime.Parse(day, new CultureInfo("en-US"));
 			if (date > DateTime.Today)
 			{
 				LWTransitionController.PopupError(LWTransitionController.Toasts.TextMessage, "Future Date");
 				return;
 			}
-
-			if (date < DateTime.Today.AddDays(-1))
-			{
-				LWTransitionController.PopupError(LWTransitionController.Toasts.TextMessage, "Past Date");
-				return;
-			}
+			
 			var dict = LWData.current.FlowerDictionary;
 			if (dict[date.Month + "/" + date.Year][date.Day - 1].PlantIndex != -1)
 			{
@@ -72,6 +69,11 @@ namespace LikeWater
 			}
 			else
 			{
+				if (date < DateTime.Today.AddDays(-1))
+				{
+					LWTransitionController.PopupError(LWTransitionController.Toasts.TextMessage, "Past Date");
+					return;
+				}
 				LWTransitionController.TransitionOff(LWTransitionController.Controllers.Pot);
 				LWTransitionController.TransitionOn(LWTransitionController.Controllers.Shop, date.ToShortDateString());
 			}
